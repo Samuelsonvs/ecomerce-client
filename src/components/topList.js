@@ -8,7 +8,7 @@ export default function TopList(props) {
     return (
         <li key={producTop._id} className="w-80 min-h-96 ml-7 mr-7 mt-20 rounded-2xl p-5">
             <div className="">
-                <Link className="cursor-pointer container flex justify-center mt-5 transform hover:scale-110 transition duration-700 ease-in-out motion-reduce:transform-none"> 
+                <Link to={`/ilan/${producTop._id}`} className="cursor-pointer container flex justify-center mt-5 transform hover:scale-110 transition duration-700 ease-in-out motion-reduce:transform-none"> 
                     <img className="rounded-full h-60 w-60 shadow-xl" src={producTop.image} alt={producTop.description} />
                 </Link>
                 <p className="leading-10 mb-10 text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit. 

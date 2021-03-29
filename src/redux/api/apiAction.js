@@ -20,7 +20,7 @@ const api = ({ dispatch, getState }) => next => async action => {
 
         } catch(error) {
             console.log(error);
-            if (onError) {dispatch({ type: onError, payload: error.response.data.message ? error.response.data.message : error.message  })};
+            if (onError) {dispatch({ type: onError, payload: error.response.data.errors ? error.response.data.errors : error.message  })};
         }
     }
 }

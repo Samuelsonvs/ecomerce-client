@@ -8,13 +8,14 @@ import Login from './components/layouts/login';
 import Header from './components/layouts/header';
 import ProductsScreen from "./screens/ProductsScreen";
 import ProductDetailScreen from './screens/ProductDetailScreen';
+import SigninScreen from './screens/SigninScreen';
 
 
 export default function App() {
   return (
     <BrowserRouter>
       <div className="grid-container">
-        <header className="header bg-indigo-700">
+        <header className="header bg-indigo-700 ">
           {/* head and icon  */}
           <Header />
           {/* navigation */}
@@ -28,6 +29,7 @@ export default function App() {
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/ilanlar" component={ProductsScreen}></Route>
           <Route path="/ilan/:id" component={ProductDetailScreen}></Route>
+          <Route path="/signin" component={SigninScreen}></Route>
         </main>
         <footer className="bg-indigo-50">
           <Footer />

@@ -26,7 +26,7 @@ code {
   'header'
   'main'
   'footer';
-  grid-template-columns: auto;
+  grid-template-columns: 1fr, auto;
   grid-template-rows: 8rem 1fr 5rem;
   height: 100%;
 }
@@ -129,7 +129,7 @@ footer {
   -moz-appearance: none;
   -o-appearance: none;
   appearance: none;
-  border: 3px solid #4338ca;
+  border: 3px solid #fff;
   border-radius: 4px;
   outline: none;
   transition-duration: 0.3s;
@@ -138,7 +138,7 @@ footer {
 }
 
 .checkbox > input:checked {
-  border: 1px solid #4338ca;
+  border: 3px solid #fff;
   background-color: #4338ca;
 }
 
@@ -157,8 +157,6 @@ footer {
 }
 
 /* custom checkbox */
-
-
 /* navbar finish*/
 
 /*dropdown*/
