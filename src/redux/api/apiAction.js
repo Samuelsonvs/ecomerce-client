@@ -5,7 +5,7 @@ const api = ({ dispatch, getState }) => next => async action => {
     if (action.type !== actions.apiCallBegan.type) { return next(action)};
 
     
-    const { url, method, data, onStart, onSuccess, onError } = action.payload;
+    const { url, method, data, onStart, onSuccess, onSign, onError } = action.payload;
     if(onStart) dispatch({ type: onStart });  
 
     if (url) {
@@ -16,6 +16,12 @@ const api = ({ dispatch, getState }) => next => async action => {
                 method,
                 data,
             });
+
+            if (onSign) {
+                dispatch({ type: onSign, payload: response.data });
+                localStorage.setItem('userInfo', JSON.stringify(response.data));
+            };
+
             if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
 
         } catch(error) {

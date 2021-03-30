@@ -49,22 +49,6 @@ footer {
 
 /* navbar */
 
-.nav-bar button {
-  cursor: pointer;
-  font-size: large;
-  background-color: #fff;
-  padding: 5px;
-  width: 10rem;
-  border-bottom: 4px solid #000;
-  border-radius: 5px;
-}
-
-.nav-bar button:hover {
-  transition: 0.1s ease-in-out;
-  color: #fff;
-  margin-bottom: -4px;
-  background-color: #000;
-}
 
 .carousel-container {
   position:relative;

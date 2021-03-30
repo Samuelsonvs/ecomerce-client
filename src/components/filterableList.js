@@ -2,13 +2,13 @@ import React from 'react'
 
 export default function FilterableList() {
     return (
-        <section className="w-full border border-gray-500 rounded-2xl border-solid bg-indigo-700 md:ml-10">
+        <section className="w-full bg-white md:ml-10">
             <div className="mt-10">
-                <h3 className="text-center text-5xl font-bold text-white">Filterable List</h3>
+                <h3 className="text-center text-5xl font-bold text-indigo-700">Filterable List</h3>
                 <div>
                     <ul className="md:flex-wrap md:flex ml-5">
                         <li className="mr-5">                    
-                            <div class="mt-10  mx-auto rounded-xl overflow-hidden shadow-md md:max-w-2xl">
+                            <div class="mt-10 bg-indigo-700  mx-auto rounded-xl overflow-hidden shadow-md md:max-w-2xl">
                                 <div class="flex max-h-64 w-full">
                                     <div class="md:flex-shrink-0">
                                         <img class="manual-hype-img h-64 w-56 object-cover" src="/images/try.jpg" alt="Man looking at item at a store" />

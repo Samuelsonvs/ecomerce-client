@@ -13,7 +13,7 @@ export default function Category() {
         setRegion(val)
     };
     return (
-        <aside className="w-full border border-gray-500 rounded-2xl border-solid bg-indigo-700 p-5 md:w-96">
+        <aside className="w-full bg-indigo-700 p-5 md:w-96">
             <div className="mt-10 ml-3 text-white">
                 <h3 className="mb-5 border-b pb-5 font-semibold text-3xl">Kategoriler</h3>
                 <ul id="style-1" className=" mt-10">

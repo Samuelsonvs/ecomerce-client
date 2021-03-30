@@ -5,14 +5,14 @@ const listed = [1,2,3,4];
 export default function Hype() {
     return (
         <div className="w-full md:p-10 border">
-            <div className=" border border-gray-500 rounded-2xl border-solid bg-indigo-700 p-5">
-                <h3 className="text-center text-5xl font-bold text-white border-b border-white border-solid pb-10">Hype</h3>
+            <div className="bg-white p-5">
+                <h3 className="text-center text-5xl font-bold text-indigo-700 border-b border-white border-solid pb-10">Hype</h3>
                 <div className="flex justify-center">
                     <ul className="max-w-screen-xl md:flex-wrap md:flex md:justify-evenly md:ml-5">
                         {listed.map((trying,index) => {
                             return (
                                 <li key={index} className="mr-5">                    
-                                    <div class="mt-10  mx-auto rounded-xl overflow-hidden shadow-md md:max-w-2xl">
+                                    <div class="mt-10 bg-indigo-700 mx-auto rounded-xl overflow-hidden shadow-md md:max-w-2xl">
                                         <div class="flex max-h-64 w-full">
                                             <div class="md:flex-shrink-0">
                                                 <img class="manual-hype-img h-64 w-56 object-cover" src="/images/try.jpg" alt="Man looking at item at a store" />
