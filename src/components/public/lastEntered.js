@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LastEntered(props) {
-    const { productLast } = props;
+export default function LastEntered({ productLast }) {
     return (
         <li key={productLast._id} className="w-80 min-h-96 ml-7 mr-7 mt-20 rounded-2xl p-5">
             <div className="">

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export default function TopList(props) {
-    const { producTop } = props;
+export default function TopList({ producTop }) {
     return (
         <li key={producTop._id} className="w-80 min-h-96 ml-7 mr-7 mt-20 rounded-2xl p-5">
             <div className="">

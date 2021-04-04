@@ -13,10 +13,10 @@ export default function Category() {
         setRegion(val)
     };
     return (
-        <aside className="w-full bg-indigo-700 p-5 md:w-96">
-            <div className="mt-10 ml-3 text-white">
+        <aside className="w-full bg-white p-5 md:w-96">
+            <div className="mt-10 ml-3 text-indigo-700">
                 <h3 className="mb-5 border-b pb-5 font-semibold text-3xl">Kategoriler</h3>
-                <ul id="style-1" className=" mt-10">
+                <ul id="style-1" className="mt-10">
                     <li>
                         <label class="checkbox">
                             <input type="checkbox" />
@@ -56,7 +56,7 @@ export default function Category() {
                 </ul>
             </div>
             <div className="mt-20 ml-3">
-                <h3 className="mb-5 border-b pb-5 font-semibold text-2xl text-white">Age</h3>
+                <h3 className="mb-5 border-b pb-5 font-semibold text-2xl text-indigo-700">Age</h3>
                 <ul className="text-white block p-4">
                     <li>
                         <label class="checkbox">
@@ -85,7 +85,7 @@ export default function Category() {
                 </ul>
             </div>
             <div className="mt-20">
-                <h3 className="mb-5 border-b pb-5 font-semibold text-2xl text-white">Province</h3>
+                <h3 className="mb-5 border-b pb-5 font-semibold text-2xl text-indigo-700">Province</h3>
                 {/* <CountryDropdown
                     value={country}
                     onChange={(val) => selectCountry(val)} 

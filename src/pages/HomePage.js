@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Slider from '../plugin/Slider';
-import TopList from '../components/topList';
-import LastEntered from '../components/lastEntered';
+import TopList from '../components/public/topList';
+import LastEntered from '../components/public/lastEntered';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { topListReceiver } from '../redux/reduxSlice/topListSlice';
 import { lastEnteredReceiver } from '../redux/reduxSlice/lastEnteredSlice';
-import LoadingBox from '../components/loadingBox';
-import MessageBox from '../components/messageBox';
+import LoadingBox from '../components/public/loadingBox';
+import MessageBox from '../components/public/messageBox';
 import { FaArrowCircleRight } from 'react-icons/fa';
 // import "react-responsive-carousel/lib/styles/carousel.css";
 
@@ -27,6 +27,7 @@ export default function HomePage() {
             error: errorLastEntered,
             list: listLastEntered
     } = lastEnteredInfo;
+
 
     useEffect(() => {
         dispatch(lastEnteredReceiver());

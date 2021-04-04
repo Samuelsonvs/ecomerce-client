@@ -102,7 +102,7 @@ footer {
 }
 
 .checkbox > span {
-  color: #fff;
+  color: #4338ca;
   padding: 0.5rem 0.25rem;
 }
 
@@ -113,7 +113,7 @@ footer {
   -moz-appearance: none;
   -o-appearance: none;
   appearance: none;
-  border: 3px solid #fff;
+  border: 2px solid #4338ca;
   border-radius: 4px;
   outline: none;
   transition-duration: 0.3s;
@@ -122,7 +122,7 @@ footer {
 }
 
 .checkbox > input:checked {
-  border: 3px solid #fff;
+  border: 2px solid #fff;
   background-color: #4338ca;
 }
 
@@ -204,3 +204,7 @@ nav {
   height: 100%;
   z-index: -1;
 } */
+
+.MuiButtonBase-root:focus {
+  outline: none;
+}

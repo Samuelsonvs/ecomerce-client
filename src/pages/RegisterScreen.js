@@ -1,38 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import LoadingBox from '../components/loadingBox';
-import MessageBox from '../components/messageBox';
-import { signUser } from '../redux/reduxSlice/userSigninSlice';
+import { registerUser } from '../redux/reduxSlice/userSigninOrRegisterSlice';
+import LoadingBox from '../components/public/loadingBox';
+import MessageBox from '../components/public/messageBox';
+// import GoogleLogin from 'react-google-login';
 
-export default function SigninScreen(props) {
+export default function RegisterScreen(props) {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    
     const redirect = props.location.search
-        ? props.location.search.split('=')[1]
-        : '/';
+     ? props.location.search.split('=')[1]
+     : '/';
 
-    const userSignin = useSelector((state) => state.entities.userSignin);
-    const { userInfo, loading, error } = userSignin;
+    const userRegister = useSelector((state) => state.entities.signinOrRegister);
+    const { userInfo, loading, error } = userRegister;
+
     const dispatch = useDispatch();
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(signUser(email, password));
-
-    };
-
+        if (password !== confirmPassword) {
+            alert('Password and confirm password are not match');
+        } else {
+            dispatch(registerUser(name, email, password));
+        }
+     };
     useEffect(() => {
-        if(userInfo) {
-            props.history.push(redirect);
+        if (userInfo) {
+             props.history.push(redirect);
         }
     }, [props.history, redirect, userInfo]);
-
     return (
         <div className="md:flex max-w-screen-2xl md:justify-center">
             <div className="mt-20 md:w-2/5 flex-shrink-0">
-                <h2 className="text-center text-gray-700 text-4xl font-extrabold">Sign In to your account</h2>
+                <h2 className="text-center text-gray-700 text-4xl font-extrabold">Register</h2>
                 <p className="mt-2 text-center text-2xl text-gray-600">Or
-                        <Link className="font-medium text-indigo-600 hover:text-indigo-500"> Register</Link>
+                        <Link className="font-medium text-indigo-600 hover:text-indigo-500"> Sign In</Link>
                 </p>
                 <label className="opacity-70 font-semibold">Sign in with</label>
                 <div>
@@ -53,6 +59,13 @@ export default function SigninScreen(props) {
                             </Link>
                         </li>
                     </ul>
+                    {/* <GoogleLogin
+                        clientId="853831049551-fn5tn310fk04htan9st9q3o0f1m0lb6f.apps.googleusercontent.com"
+                        buttonText="Login"
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                        ></GoogleLogin>         */}
                 </div>
                 <h5 className="w-full text-center h-2 border-b leading-3 mt-10 mb-20 bg-gray-200  rounded-md">
                     <span className="bg-indigo-50 pt-0 pr-10 pl-10 pb-0 text-gray-700 opacity-100">
@@ -61,9 +74,19 @@ export default function SigninScreen(props) {
                 </h5>
             <form className="form" onSubmit={submitHandler}>
                 {loading && <LoadingBox></LoadingBox>}
-                {error && <MessageBox variant="error">{error}</MessageBox>}
-                <div className="mt-10 mb-10">
-                    <label className="text-gray-600 font-semibold" htmlFor="email">Email address</label>
+                {error &&  <MessageBox variant="error">{error}</MessageBox>}
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="name">Name</label>
+                    <input
+                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
+                        type="text"
+                        id="name"
+                        required
+                        onChange={(e) => setName(e.target.value)}
+                        ></input>
+                </div>
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="email">Email Address</label>
                     <input
                         className="mt-2 block w-full h-16 border border-transparent rounded-md"
                         type="email"
@@ -72,7 +95,7 @@ export default function SigninScreen(props) {
                         onChange={(e) => setEmail(e.target.value)}
                         ></input>
                 </div>
-                <div>
+                <div className="mt-10">
                     <label className="text-gray-600 font-semibold" htmlFor="password">Password</label>
                     <input
                         className="mt-2 block w-full h-16 border border-transparent rounded-md"
@@ -80,6 +103,16 @@ export default function SigninScreen(props) {
                         id="password"
                         required
                         onChange={(e) => setPassword(e.target.value)}
+                        ></input>
+                </div>
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
+                        type="password"
+                        id="confirmPassword"
+                        required
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         ></input>
                 </div>
                 <div>
@@ -91,7 +124,7 @@ export default function SigninScreen(props) {
                                 <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                             </svg>
                         </span>
-                        Sign in
+                        Register
                     </button>
                 </div>
                 </div>
@@ -99,13 +132,13 @@ export default function SigninScreen(props) {
                 <div className="mt-10">
                     <label />
                     <div>
-                        New customer?{' '} 
-                        <Link className="font-medium text-indigo-600 hover:text-indigo-500"to={`/register?redirect=${redirect}`}>
-                            Create your account</Link>
+                        Already have an account?{' '} 
+                        <Link className="font-medium text-indigo-600 hover:text-indigo-500"to={`/signin?redirect=${redirect}`}>
+                            Sign In</Link>
                     </div>
                 </div>
             </form>
             </div>
         </div>
-    )
+    );
 }

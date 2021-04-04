@@ -5,7 +5,7 @@ import reducer from '../combineReducer';
 
 const preloadedState = {
     entities: {
-        userSignin: {
+        signinOrRegister: {
             userInfo: localStorage.getItem('userInfo')
             ? JSON.parse(localStorage.getItem('userInfo'))
             : null,

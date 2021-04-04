@@ -1,13 +1,14 @@
 import React from 'react';
-import HomePage from "./screens/HomePage";
+import HomePage from "./pages/HomePage";
 import { BrowserRouter, Route } from 'react-router-dom';
 import Footer from "./components/layouts/footer";
 import NavbarMobileToggler from './components/layouts/navbarMobileToggler';
 import Navbar from './components/layouts/navbar';
 import Header from './components/layouts/header';
-import ProductsScreen from "./screens/ProductsScreen";
-import ProductDetailScreen from './screens/ProductDetailScreen';
-import SigninScreen from './screens/SigninScreen';
+import ProductsScreen from "./pages/ProductsScreen";
+import ProductDetailScreen from './pages/ProductDetailScreen';
+import SigninScreen from './pages/SigninScreen';
+import RegisterScreen from './pages/RegisterScreen';
 
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/ilanlar" component={ProductsScreen}></Route>
           <Route path="/ilan/:id" component={ProductDetailScreen}></Route>
           <Route path="/signin" component={SigninScreen}></Route>
+          <Route path="/register" component={RegisterScreen}></Route>
         </main>
         <footer className="bg-indigo-50">
           <Footer />

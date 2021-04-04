@@ -12,13 +12,13 @@ const useStyles = makeStyles({
     }
 });
 
-export default function MessageBox(props) {
+export default function MessageBox({ variant, children }) {
     const classes = useStyles();
     return (
         <div>
-            <Alert className={classes.alert} severity={`${props.variant || 'warning'}`}>
+            <Alert className={classes.alert} severity={`${variant || 'warning'}`}>
                 <AlertTitle className={classes.alertitle}>Error</AlertTitle>
-                {props.children} — <strong>check it out!</strong>
+                {children} — <strong>check it out!</strong>
             </Alert>
         </div>
     )
