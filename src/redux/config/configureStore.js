@@ -10,7 +10,7 @@ const preloadedState = {
             ? JSON.parse(localStorage.getItem('userInfo'))
             : null,
         },
-    }
+    },
 };
 
 export default function configStore(){

@@ -57,20 +57,24 @@ export default function Navbar() {
                 <nav className="hidden md:inline text-2xl lg:text-3xl text-white 2xl:text-4xl">
                     <ul className="flex">
                         <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
+                            <Link to="/">
                             <FiHome className="inline mb-2 mr-5" />
-                            <Link to="/">Anasayfa</Link>
+                                Anasayfa</Link>
                         </li>
                         <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
+                            <Link to="/ilanlar">
                             <FiColumns className="inline mb-2 ml-10 mr-5" />
-                            <Link to="/ilanlar">Türler</Link>
+                                Türler</Link>
                         </li>
                         <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
+                            <Link to="/">
                             <FiMapPin className="inline mb-2 ml-10 mr-5" />
-                            <Link to="/">İletişim</Link>
+                                İletişim</Link>
                         </li>
                         <li className="p-2 hover:bg-gray-600 rounded-lg">
+                            <Link to="/">
                             <FiSmile className="inline mb-2 ml-10 mr-5" />
-                            <Link to="/">Hakkımızda</Link>
+                                Hakkımızda</Link>
                         </li>
                     </ul>
                 </nav>

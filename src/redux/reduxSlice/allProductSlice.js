@@ -13,10 +13,12 @@ const slice = createSlice({
         allProductRequest: (state, action) => {
             state.loading = true
         },
+
         allProductReceived: (state, action) => {
             state.loading = false;
             state.list = action.payload.productAll;
         },
+
         allProductFail: (state, action) => {
             state.loading = false;
             state.error = action.payload
@@ -32,10 +34,10 @@ export const {
 } = slice.actions;
 export default slice.reducer;
 
-const url = "/api/product/allproduct";
+const url = "/api/product/";
 
 export const productAll = () => apiCallBegan({
-    url,
+    url: url + 'allproduct',
     onStart: allProductRequest.type,
     onSuccess: allProductReceived.type,
     onFail: allProductFail.type
