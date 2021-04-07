@@ -42,3 +42,4 @@ export const productAll = () => apiCallBegan({
     onSuccess: allProductReceived.type,
     onFail: allProductFail.type
 });
+

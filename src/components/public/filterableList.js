@@ -13,10 +13,10 @@ export default function FilterableList({list, itemPerPage, pageNumber}) {
                             .map((state, index) => {
                             return (
                                 <li key={index} className="md:mr-5">                    
-                                    <div class="mt-10 bg-indigo-700  mx-auto rounded-xl overflow-hidden shadow-md md:max-w-2xl">
-                                        <div class="flex max-h-64 w-full">
-                                            <div class="md:flex-shrink-0">
-                                                <img class="manual-hype-img h-64 w-56 object-cover" src="/images/try.jpg" alt="Man looking at item at a store" />
+                                    <div class="mt-10 bg-indigo-700  mx-auto rounded-xl overflow-hidden shadow-md max-w-2xl">
+                                        <div class="flex max-h-64">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-64 w-56 object-cover" src="/images/try.jpg" alt="Man looking at item at a store" />
                                             </div>
                                             <div class="p-4 md:p-8">
                                                 <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>

@@ -4,41 +4,41 @@ import TopList from '../components/public/topList';
 import LastEntered from '../components/public/lastEntered';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { topListReceiver } from '../redux/reduxSlice/topListSlice';
-import { lastEnteredReceiver } from '../redux/reduxSlice/lastEnteredSlice';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
 import { FaArrowCircleRight } from 'react-icons/fa';
+import { indexReceiver } from '../redux/reduxSlice/indexListsSlice';
 // import "react-responsive-carousel/lib/styles/carousel.css";
 
 
 export default function HomePage() {
     const dispatch = useDispatch();
-    const topListInfo = useSelector((state) => state.entities.topList);
-    const { loading: loadingTopList,
-            error: errorTopList, 
-            list: listTopList,
-    } = topListInfo;
-    listTopList.map((state) => console.log((new Date(state.createdAt).toLocaleDateString())));
+
+    const indexLists = useSelector((state) => state.entities.indexLists);
+
+    const {
+        loading,
+        error,
+        topList,
+        lastEnteredList
+    } = indexLists;
+
+    topList.map((state) => console.log((new Date(state.createdAt).toLocaleDateString())));
    
 
-    const lastEnteredInfo = useSelector((state) => state.entities.lastEntered);
-    const { loading: loadingLastEntered,
-            error: errorLastEntered,
-            list: listLastEntered
-    } = lastEnteredInfo;
-
 
     useEffect(() => {
-        dispatch(lastEnteredReceiver());
-    }, [dispatch])
+        dispatch(indexReceiver());
+    }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(topListReceiver());
-    }, [dispatch])
     return (
         <div>
             <Slider />
+            {loading ? (
+                <LoadingBox />
+            ) : error ? (
+                <MessageBox variant={"error"} >Hata Mesajı</MessageBox>
+            ) : (
             <div className="flex justify-center">
                 <div className="max-w-screen-2xl">
                     <div className="flex-wrap flex">
@@ -89,36 +89,25 @@ export default function HomePage() {
                         <h1 className="text-center mt-32 text-7xl text-indigo-900 pb-20 border-b-2 border-indigo-300">Top
                             <span className="font-black"> List</span>
                         </h1>
-                        {loadingTopList ? (
-                            <LoadingBox />
-                        ) :errorTopList ? (
-                            <MessageBox variant={"error"}>Burası bir hatadır</MessageBox>
-                        ) : (
-                            <ul className="list-none text-1xl flex justify-evenly flex-wrap">
-                                {listTopList.map((producTop) => (
-                                    <TopList key={producTop._id} producTop={producTop} />
-                                ))}
-                            </ul>
-                        )}
+                        <ul className="list-none text-1xl flex justify-evenly flex-wrap">
+                            {topList.map((producTop) => (
+                                <TopList key={producTop._id} producTop={producTop} />
+                            ))}
+                        </ul>
                     </div>
                     <div>
                         <h1 className="text-center mt-32 text-7xl text-indigo-900 pb-20 border-b-2 border-indigo-300">Last
                             <span className="font-black"> Entered</span>
                         </h1>
-                        {loadingLastEntered ? (
-                            <LoadingBox />
-                        ) :errorLastEntered ? (
-                            <MessageBox variant={"error"}>{errorLastEntered}</MessageBox>
-                        ) : (
-                            <ul className="list-none text-1xl flex justify-evenly flex-wrap">
-                                {listLastEntered.map((productLast) => (
-                                    <LastEntered key={productLast._id} productLast={productLast} />
-                                ))}
-                            </ul>
-                        )}
+                        <ul className="list-none text-1xl flex justify-evenly flex-wrap">
+                            {lastEnteredList.map((productLast) => (
+                                <LastEntered key={productLast._id} productLast={productLast} />
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>
+            )}
         </div>
     )
 }

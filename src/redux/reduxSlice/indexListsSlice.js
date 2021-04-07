@@ -4,23 +4,25 @@ import { apiCallBegan } from '../api/api';
 
 
 const slice = createSlice({
-    name: "lastEntered",
+    name: "indexLists",
     initialState: {
-        list: [],
+        lastEnteredList: [],
+        topList: [],
         loading: false,
         lastFetch: null,
         error: null,
     },
     reducers: {
-        lastEnteredReq: (state, action) => {
+        indexRequest: (state, action) => {
             state.loading = true
         },
-        lastEnteredReceived: (state, action) => {
+        indexReceived: (state, action) => {
             state.loading = false;
-            state.list = action.payload.prodLastEntered;
+            state.lastEnteredList = action.payload.prodLastEntered;
+            state.topList = action.payload.prodTopList;
             state.lastFetch = Date.now();
         },
-        lastEnteredFail: (state, action) => {
+        indexFail: (state, action) => {
             state.loading = false;
             state.error = action.payload
         }
@@ -29,24 +31,24 @@ const slice = createSlice({
 
 
 export const {
-    lastEnteredReq,
-    lastEnteredReceived,
-    lastEnteredFail,
+    indexRequest,
+    indexReceived,
+    indexFail
 } = slice.actions;
 export default slice.reducer;
 
 const url = "/api/product";
 
-export const lastEnteredReceiver = () => (dispatch, getState) => {
-    const { lastFetch } = getState().entities.lastEntered;
+export const indexReceiver = () => (dispatch, getState) => {
+    const { lastFetch } = getState().entities.indexLists;
 
     const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
     if ( diffInMinutes < 10 ) return;
 
     dispatch(apiCallBegan({
         url,
-        onStart: lastEnteredReq.type,
-        onSuccess: lastEnteredReceived.type,
-        onError: lastEnteredFail.type,
+        onStart: indexRequest.type,
+        onSuccess: indexReceived.type,
+        onError: indexFail.type,
     }));
 }

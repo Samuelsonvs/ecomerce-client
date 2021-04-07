@@ -23,7 +23,7 @@ export default function ProductsScreen(props) {
     const [ country ] = useState('Turkey');
     const [ region, setRegion ] = useState('İl');
     const [filteredList, setFilteredList] = useState([]);
-    const [noOfPages, setNoOfPages] = useState(0);
+    const [noOfPages, setNoOfPages] = useState(1);
     const [pageNumber, setPageNumber] = useState(
         props.location.search ? 
         props.location.search.split('=')[1] :
@@ -50,7 +50,7 @@ export default function ProductsScreen(props) {
         } else {
             setFilteredList([
                 ...filteredList.filter((state) => 
-                    state.category !== e.target.value)])
+                    state.category !== e.target.value)]);
         }
     }
 
@@ -62,21 +62,16 @@ export default function ProductsScreen(props) {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(productAll())
+        dispatch(productAll());
     }, [dispatch]);
 
-    useEffect(() => {
-        setNoOfPages(Math.ceil(list.length / itemPerPage))
-    }, [list]);
-
-    //
     useEffect(() => {
         if (filteredList.length !== 0) {
             setNoOfPages(Math.ceil(filteredList.length / itemPerPage))
         } else {
-            dispatch(productAll())
-        };
-    }, [filteredList, dispatch]);
+            setNoOfPages(Math.ceil(list.length / itemPerPage));
+        }
+    }, [filteredList, list]);
     
     return (
         <>
@@ -86,7 +81,7 @@ export default function ProductsScreen(props) {
                 <MessageBox />
             ) : (
             <>
-            <Hype />
+            <Hype list={list} />
             <div className="md:flex md:p-10">
                 <aside className="w-full bg-white p-5 md:w-96">
                     <div className="mt-10 ml-3 text-indigo-700">

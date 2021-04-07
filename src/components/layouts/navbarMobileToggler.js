@@ -55,25 +55,25 @@ export default function NavbarMobileToggler() {
              + (menu === false ? 'transform translate-x-full scale-0 opacity-0' : 'transform translate-x-0 w-1/2')}> 
                 <ul>
                 <li className="mt-80 mb-3 text-center ">
-                    <Link className="block w-full p-4 hover:bg-gray-400" to="/">
+                    <Link className="block w-full py-4 hover:bg-gray-400" to="/">
                     <FiHome className="inline mr-2" />
                     Anasayfa
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full p-4 hover:bg-gray-400" to="/ilanlar">
+                    <Link className="block w-full py-4 hover:bg-gray-400" to="/ilanlar">
                     <FiColumns className="inline mr-2" />
                     Türler
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full p-4 hover:bg-gray-400" >
+                    <Link className="block w-full py-4 hover:bg-gray-400" to='/iletişim' >
                     <FiMapPin className="inline mr-2" />
                     İletişim
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full p-4 hover:bg-gray-400" >
+                    <Link className="block w-full py-4 hover:bg-gray-400" >
                     <FiSmile className="inline mr-2" />
                     Hakkımızda
                     </Link>
