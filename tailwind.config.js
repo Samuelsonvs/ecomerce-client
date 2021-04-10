@@ -142,6 +142,7 @@ module.exports = {
       text: 'text',
       move: 'move',
       help: 'help',
+      'zoom-in': 'zoom-in',
       'not-allowed': 'not-allowed',
     },
     divideColor: (theme) => theme('borderColor'),

@@ -9,6 +9,7 @@ import ProductsScreen from "./pages/ProductsScreen";
 import ProductDetailScreen from './pages/ProductDetailScreen';
 import SigninScreen from './pages/SigninScreen';
 import RegisterScreen from './pages/RegisterScreen';
+import ContactScreen from './pages/ContactScreen';
 
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/ilan/:id" component={ProductDetailScreen}></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
+          <Route path="/contact" component={ContactScreen}></Route>
         </main>
         <footer className="bg-indigo-50">
           <Footer />

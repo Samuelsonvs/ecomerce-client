@@ -67,7 +67,7 @@ export default function NavbarMobileToggler() {
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full py-4 hover:bg-gray-400" to='/iletişim' >
+                    <Link className="block w-full py-4 hover:bg-gray-400" to='/contact' >
                     <FiMapPin className="inline mr-2" />
                     İletişim
                     </Link>

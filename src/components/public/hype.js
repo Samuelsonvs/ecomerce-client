@@ -20,11 +20,11 @@ export default function Hype({ list }) {
                                             </div>
                                             <div class="p-4 md:p-8">
                                                 <div class="uppercase tracking-wide text-sm text-indigo-200 font-semibold">{state.name}</div>
-                                                <Link to={state._id} class="block mt-1 text-xl leading-tight text-yellow-200 font-semibold border-b pb-3 hover:text-yellow-400">Finding customers for your new business</Link>
+                                                <Link to={`/ilan/${state._id}`} class="block mt-1 text-xl leading-tight text-yellow-200 font-semibold border-b pb-3 hover:text-yellow-400">Finding customers for your new business</Link>
                                                 <p class="mt-2 text-base text-white">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
                                                 <div className="flex justify-between mt-3 sm:mt-7">
-                                                    <span className="px-4 text-indigo-200 bg-indigo-500 rounded-md">0 - 5 Aylık</span>
-                                                    <span className="px-4 text-indigo-200 bg-indigo-500 rounded-md">İstanbul</span>
+                                                    <span className="px-4 text-indigo-100 bg-indigo-500 rounded-md">0 - 5 Aylık</span>
+                                                    <span className="px-4 text-indigo-100 bg-indigo-500 rounded-md">İstanbul</span>
                                                 </div>
                                             </div>
                                         </div>

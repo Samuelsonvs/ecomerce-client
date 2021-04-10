@@ -67,7 +67,7 @@ export default function Navbar() {
                                 Türler</Link>
                         </li>
                         <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
-                            <Link to="/">
+                            <Link to="/contact">
                             <FiMapPin className="inline mb-2 ml-10 mr-5" />
                                 İletişim</Link>
                         </li>
