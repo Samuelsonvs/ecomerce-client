@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import api from "../api/apiAction";
-// import orderApi from "./cardApi";
+import api from "../api/generalApiAction";
+import apiWithLogin from '../api/apiWithLogin';
 import reducer from '../combineReducer';
 
 const preloadedState = {
@@ -18,7 +18,7 @@ export default function configStore(){
         reducer,
         preloadedState,
         middleware: [
-            ...getDefaultMiddleware(),api,
+            ...getDefaultMiddleware(),api,apiWithLogin
         ]
     })
 };

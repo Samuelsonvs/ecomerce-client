@@ -43,12 +43,12 @@ export default function ProductDetailScreen(props) {
     const currentImageFunc = (e) => {
         e.preventDefault(); 
         setCurrentImage(midImages[thumbImages.indexOf(e.target.attributes.src['value'])])
-    }
+    };
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(detailProduct(productId));
-    }, [dispatch, productId])
+    }, [dispatch, productId]);
 
     useEffect(() => {
         setBigImages(images[midImages.indexOf(currentImage)])
@@ -68,7 +68,7 @@ export default function ProductDetailScreen(props) {
                                 mainSrc={bigImage}
                                 nextSrc={nextImage}
                                 prevSrc={prevImage}
-                                onCloseRequest={() => {setLightbox(false)}}
+                                onCloseRequest={() => setLightbox(false)}
                                 onMoveNextRequest={() => setBigImages(nextImage)}
                                 onMovePrevRequest = {() => setBigImages(prevImage)}
                             />
@@ -80,9 +80,9 @@ export default function ProductDetailScreen(props) {
                         </button>
                     </div>
                     <div className="mt-5">
-                        {thumbImages.map((state) => {
+                        {thumbImages.map((state, index) => {
                             return (
-                                <button className="focus:outline-none cursor-pointer" onClick={currentImageFunc}>
+                                <button key={index} className="focus:outline-none cursor-pointer" onClick={currentImageFunc}>
                                     <img className="max-w-xs max-h-32 inline" alt="midi" src={state}/>
                                 </button>
                             )

@@ -1,23 +1,13 @@
-import { Pagination, PaginationItem } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import FilterableList from '../components/public/filterableList';
 import Hype from '../components/public/hype';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { productAll } from '../redux/reduxSlice/allProductSlice';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
-import { makeStyles } from '@material-ui/core';
 import { RegionDropdown } from 'react-country-region-selector';
+import PaginationUI from '../components/public/paginationUI';
 
-const useStyles = makeStyles(theme => ({
-    paginator: {
-      padding: "10px"
-    },
-    root: {
-        cursor: 'pointer',
-    }
-}));
 
 export default function ProductsScreen(props) {
     const [ country ] = useState('Turkey');
@@ -31,7 +21,6 @@ export default function ProductsScreen(props) {
         
     const itemPerPage = 4;
     const USER_PATH = "/ilanlar";
-    const classes = useStyles();
     const products = useSelector((state) => state.entities.receivedProduct);
 
     const {loading, error, list} = products;
@@ -213,26 +202,11 @@ export default function ProductsScreen(props) {
             </div>
            
             <div className="flex justify-center mt-20">
-                <Pagination
-                    page={Number(pageNumber)}
-                    count={noOfPages}
-                    shape="round"
-                    color="primary"
-                    boundaryCount={2}
-                    showFirstButton
-                    showLastButton
-                    onChange={handleChange}
-                    classes={{ ul: classes.paginator }}
-                    renderItem={(item) => (
-                                <PaginationItem
-                                    type={"start-ellipsis"}
-                                    component={Link}
-                                    selected
-                                    // classes={{ a: classes.root }}
-                                    to={`${USER_PATH}?syf=${item.page}`}
-                                    {...item}
-                        />
-                    )}
+                <PaginationUI
+                        pageNumber={pageNumber}
+                        noOfPages={noOfPages}
+                        USER_PATH={USER_PATH}
+                        handleChange={handleChange}
                 />
             </div>
             </>
