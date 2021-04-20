@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import PaginationUI from '../public/paginationUI';
 
+const id = '123456789';
 
 export default function ProductListScreen(props) {
     const [check, setCheck] = useState(false);
@@ -156,7 +157,7 @@ export default function ProductListScreen(props) {
                         <MessageBox />
                     ) : (
                         <div className="w-full">
-                            <button className="float-right outline-none border focus:bg-indigo-300 rounded-full focus:outline-none">
+                            <button className="float-right outline-none border focus:bg-indigo-300 rounded-full focus:outline-none" onClick={() => props.history.push(`/product/edit/${id}`)}>
                                 <AiFillPlusCircle className="text-indigo-700 w-20 h-20" />
                             </button>
                             <button className={check ?"float-right outline-none border focus:bg-indigo-300 rounded-full focus:outline-none": "hidden"}>

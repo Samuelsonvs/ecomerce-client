@@ -15,6 +15,7 @@ import AdminRoute from './components/private/AdminRoute';
 import Dashboard from './components/private/Dashboard';
 import OrderList from './components/private/OrderList';
 import CustomerList from './components/private/CustomerList';
+import ProductEdit from './components/private/ProductEdit';
 
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
           <AdminRoute path="/dashboard/productlist" component={ProductList}></AdminRoute>
           <AdminRoute path="/dashboard/orderlist" component={OrderList}></AdminRoute>
           <AdminRoute path="/dashboard/customerlist" component={CustomerList}></AdminRoute>
+          <AdminRoute path="/product/edit/:id" component={ProductEdit}></AdminRoute>
         </main>
         <footer className="bg-indigo-50">
           <Footer />

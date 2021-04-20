@@ -6,12 +6,14 @@
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "moment": "^2.29.1",
+    "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-country-region-selector": "^3.0.2",
@@ -29,8 +31,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start && set \"GENERATE_SOURCEMAP=false\"",
-    "build": "craco build",
+    "start": "set \"GENERATE_SOURCEMAP=false\" && craco start",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

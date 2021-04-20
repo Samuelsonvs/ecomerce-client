@@ -5,42 +5,42 @@ import { detailProduct } from '../redux/reduxSlice/productDetailSlice';
 import Lightbox from '../plugin/react-image-lightbox/index';
 import '../plugin/react-image-lightbox/style.css';
 
-const images = [
-    "/images/mega/mega111.jpg",
-    "/images/mega/mega222.jpg",
-    "/images/mega/mega333.jpg",
-    "/images/mega/mega444.jpg",
-    "/images/mega/mega555.jpg",
-]
+const zoomImages = [
+    "/images/default/sultan1/zoom1.jpg",
+    "/images/default/sultan1/zoom2.jpg",
+    "/images/default/sultan1/zoom3.jpg",
+    "/images/default/sultan1/zoom4.jpg",
+    "/images/default/sultan1/zoom5.jpg",
+];
 
 const midImages = [
-    "/images/mid/thumb111.jpg",
-    "/images/mid/thumb222.jpg",
-    "/images/mid/thumb333.jpg",
-    "/images/mid/thumb444.jpg",
-    "/images/mid/thumb555.jpg",
-]
+    "/images/default/sultan1/mid1.jpg",
+    "/images/default/sultan1/mid2.jpg",
+    "/images/default/sultan1/mid3.jpg",
+    "/images/default/sultan1/mid4.jpg",
+    "/images/default/sultan1/mid5.jpg",
+];
 
 const thumbImages = [
-    "/images/thumb/mini111.jpg",
-    "/images/thumb/mini222.jpg",
-    "/images/thumb/mini333.jpg",
-    "/images/thumb/mini444.jpg",
-    "/images/thumb/mini555.jpg",
-]
+    "/images/default/sultan1/thumb1.jpg",
+    "/images/default/sultan1/thumb2.jpg",
+    "/images/default/sultan1/thumb3.jpg",
+    "/images/default/sultan1/thumb4.jpg",
+    "/images/default/sultan1/thumb5.jpg",
+];
 
 export default function ProductDetailScreen(props) {
     const productId = props.match.params.id;
     const productDetails = useSelector(state => state.entities.productDetail);
     const { loading, error, product } = productDetails;
 
-    const [currentImage, setCurrentImage] = useState("/images/mid/thumb111.jpg");
+    const [currentImage, setCurrentImage] = useState("/images/default/sultan1/mid1.jpg");
     const [lightbox, setLightbox] = useState(false);
-    const [bigImage, setBigImages] = useState(images[midImages.indexOf(currentImage)]);
-    const nextImage = images[((images.indexOf(bigImage) + 1) % images.length)];
-    const prevImage = images[((images.indexOf(bigImage) + images.length - 1) % images.length)];
+    const [bigImage, setBigImages] = useState(zoomImages[midImages.indexOf(currentImage)]);
+    const nextImage = zoomImages[((zoomImages.indexOf(bigImage) + 1) % zoomImages.length)];
+    const prevImage = zoomImages[((zoomImages.indexOf(bigImage) + zoomImages.length - 1) % zoomImages.length)];
 
-    const currentImageFunc = (e) => {
+    const currentImageHandler = (e) => {
         e.preventDefault(); 
         setCurrentImage(midImages[thumbImages.indexOf(e.target.attributes.src['value'])])
     };
@@ -51,7 +51,7 @@ export default function ProductDetailScreen(props) {
     }, [dispatch, productId]);
 
     useEffect(() => {
-        setBigImages(images[midImages.indexOf(currentImage)])
+        setBigImages(zoomImages[midImages.indexOf(currentImage)])
     }, [currentImage]);
 
     return (
@@ -59,6 +59,7 @@ export default function ProductDetailScreen(props) {
             <h1 className="text-4xl text-gray-800 p-5 border-b">Ele alışkın sultan papağanları</h1>
             <div className="md:flex md:justify-evenly">
                 <div className="mt-10 flex justify-center items-center md:items-start flex-col">
+                    <div>
                     <div className="mt-5">
                         {/* <button onClick={() => setLightbox(true)}>asasas</button> */}
                         <button className="focus:outline-none cursor-zoom-in" onClick={() => setLightbox(true)}>
@@ -68,7 +69,7 @@ export default function ProductDetailScreen(props) {
                                 mainSrc={bigImage}
                                 nextSrc={nextImage}
                                 prevSrc={prevImage}
-                                onCloseRequest={() => setLightbox(false)}
+                                onCloseRequest={() => {setLightbox(false); setBigImages(zoomImages[midImages.indexOf(currentImage)])}}
                                 onMoveNextRequest={() => setBigImages(nextImage)}
                                 onMovePrevRequest = {() => setBigImages(prevImage)}
                             />
@@ -82,11 +83,12 @@ export default function ProductDetailScreen(props) {
                     <div className="mt-5">
                         {thumbImages.map((state, index) => {
                             return (
-                                <button key={index} className="focus:outline-none cursor-pointer" onClick={currentImageFunc}>
-                                    <img className="max-w-xs max-h-32 inline" alt="midi" src={state}/>
+                                <button key={index} className="focus:outline-none cursor-pointer" onClick={currentImageHandler}>
+                                    <img className="w-full h-full inline" alt="midi" src={state}/>
                                 </button>
                             )
                         })}
+                    </div>
                     </div>
                 </div>
                 <div className="ml-10 mt-10">

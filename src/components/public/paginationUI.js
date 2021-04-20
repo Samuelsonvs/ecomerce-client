@@ -28,6 +28,7 @@ export default function PaginationUI({pageNumber, noOfPages, handleChange, USER_
                 classes={{ ul: classes.paginator }}
                 renderItem={(item) => (
                             <PaginationItem
+                                style={{fontSize:"1.5rem"}}
                                 type={"start-ellipsis"}
                                 component={Link}
                                 selected
