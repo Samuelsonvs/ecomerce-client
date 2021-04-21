@@ -1,32 +1,29 @@
 import React, { useEffect } from 'react';
 import Slider from '../plugin/Slider';
 import TopList from '../components/public/topList';
-import LastEntered from '../components/public/lastEntered';
+import Latest from '../components/public/latest';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
 import { FaArrowCircleRight } from 'react-icons/fa';
-import { indexReceiver } from '../redux/reduxSlice/indexListsSlice';
+import { indexReceiver } from '../redux/reduxSlice/listsSlice';
 // import "react-responsive-carousel/lib/styles/carousel.css";
 
 
 export default function HomePage() {
     const dispatch = useDispatch();
 
-    const indexLists = useSelector((state) => state.entities.indexLists);
+    const indexLists = useSelector((state) => state.entities.lists);
 
     const {
         loading,
         error,
         topList,
-        lastEnteredList
+        latestList,
     } = indexLists;
 
-    topList.map((state) => console.log((new Date(state.createdAt).toLocaleDateString())));
    
-
-
     useEffect(() => {
         dispatch(indexReceiver());
     }, [dispatch]);
@@ -90,18 +87,18 @@ export default function HomePage() {
                             <span className="font-black"> List</span>
                         </h1>
                         <ul className="list-none text-1xl flex justify-evenly flex-wrap">
-                            {topList.map((producTop) => (
-                                <TopList key={producTop._id} producTop={producTop} />
+                            {topList.map((state) => (
+                                <TopList key={state._id} state={state} />
                             ))}
                         </ul>
                     </div>
                     <div>
-                        <h1 className="text-center mt-32 text-7xl text-indigo-900 pb-20 border-b-2 border-indigo-300">Last
-                            <span className="font-black"> Entered</span>
+                        <h1 className="text-center mt-32 text-7xl text-indigo-900 pb-20 border-b-2 border-indigo-300">Latest
+                            <span className="font-black"> List</span>
                         </h1>
                         <ul className="list-none text-1xl flex justify-evenly flex-wrap">
-                            {lastEnteredList.map((productLast) => (
-                                <LastEntered key={productLast._id} productLast={productLast} />
+                            {latestList.map((state) => (
+                                <Latest key={state._id} state={state} />
                             ))}
                         </ul>
                     </div>

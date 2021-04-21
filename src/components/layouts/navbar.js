@@ -82,33 +82,8 @@ export default function Navbar() {
 
     return (
         <>
-            <div>
-                <nav className="hidden mn:inline text-2xl lg:text-3xl text-white 2xl:text-4xl">
-                    <ul className="flex">
-                        <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
-                            <Link to="/">
-                            <FiHome className="inline mb-2 mr-5" />
-                                Anasayfa</Link>
-                        </li>
-                        <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
-                            <Link to="/ilanlar">
-                            <FiColumns className="inline mb-2 ml-10 mr-5" />
-                                Türler</Link>
-                        </li>
-                        <li className="mr-5 p-2 hover:bg-gray-600 rounded-lg">
-                            <Link to="/contact">
-                            <FiMapPin className="inline mb-2 ml-10 mr-5" />
-                                İletişim</Link>
-                        </li>
-                        <li className="p-2 hover:bg-gray-600 rounded-lg">
-                            <Link to="/">
-                            <FiSmile className="inline mb-2 ml-10 mr-5" />
-                                Hakkımızda</Link>
-                        </li>
-                    </ul>
-                </nav>
-            </div>                                      
-            <div className="mn:mr-10 absolute right-24 mn:right-0 mn:relative text-2xl">
+                                    
+            <div className="md:mr-10 absolute right-24 md:right-0 md:relative text-2xl">
                 { userInfo ? (
                     <div class="ml-3 relative inline-block">
                         <div>

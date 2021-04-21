@@ -42,7 +42,7 @@ export default function NavbarMobileToggler() {
     return (
         <>  
             {/* burger */}
-            <div id="menuToggle" className="block mn:hidden">
+            <div id="menuToggle" className="block md:hidden">
 
               <input id="burger-input" type="checkbox" checked={menu} onClick={menuFunc}/>
               <span></span>

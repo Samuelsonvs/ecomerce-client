@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import FilterableList from '../components/public/filterableList';
 import Hype from '../components/public/hype';
 import { useDispatch, useSelector } from 'react-redux';
-import { productAll } from '../redux/reduxSlice/allProductSlice';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
 import { RegionDropdown } from 'react-country-region-selector';
 import PaginationUI from '../components/public/paginationUI';
+import { generalListReceiver } from '../redux/reduxSlice/listsSlice';
 
 
 export default function ProductsScreen(props) {
@@ -21,9 +21,9 @@ export default function ProductsScreen(props) {
         
     const itemPerPage = 4;
     const USER_PATH = "/ilanlar";
-    const products = useSelector((state) => state.entities.receivedProduct);
+    const products = useSelector((state) => state.entities.lists);
 
-    const {loading, error, list} = products;
+    const {loading, error, generalList, hypeList} = products;
 
     const selectRegion = (val) => {
         setRegion(val)
@@ -34,7 +34,7 @@ export default function ProductsScreen(props) {
         if (e.target.checked === true) {
             setFilteredList([
                 ...filteredList,
-                ...(list.filter((state) => 
+                ...(generalList.filter((state) => 
                     state.category === e.target.value))]);
         } else {
             setFilteredList([
@@ -51,16 +51,16 @@ export default function ProductsScreen(props) {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(productAll());
+        dispatch(generalListReceiver());
     }, [dispatch]);
 
     useEffect(() => {
         if (filteredList.length !== 0) {
             setNoOfPages(Math.ceil(filteredList.length / itemPerPage))
         } else {
-            setNoOfPages(Math.ceil(list.length / itemPerPage));
+            setNoOfPages(Math.ceil(generalList.length / itemPerPage));
         }
-    }, [filteredList, list]);
+    }, [filteredList, generalList]);
     
     return (
         <>
@@ -70,7 +70,7 @@ export default function ProductsScreen(props) {
                 <MessageBox />
             ) : (
             <>
-            <Hype list={list} />
+            <Hype hypeList={hypeList} />
             <div className="md:flex md:p-10">
                 <aside className="w-full bg-white p-5 md:w-96">
                     <div className="mt-10 ml-3 text-indigo-700">
@@ -78,32 +78,32 @@ export default function ProductsScreen(props) {
                         <ul id="style-1" className="mt-10">
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Muhabbet Kuşu</span>
+                                    <input type="checkbox" value="Budgie" onChange={filterFunc}/>
+                                    <span>Budgie</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Kanarya</span>
+                                    <input type="checkbox" value="Canary" onChange={filterFunc}/>
+                                    <span>Canary</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Hint Bülbülü</span>
+                                    <input type="checkbox" value="Finch" onChange={filterFunc}/>
+                                    <span>Finch</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Cennet Papağanı</span>
+                                    <input type="checkbox" value="Lovebird" onChange={filterFunc}/>
+                                    <span>Lovebird</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Sultan Papağanı</span>
+                                    <input type="checkbox" value="Cockatiel" onChange={filterFunc}/>
+                                    <span>Cockatiel</span>
                                 </label>
                             </li>
                             <li>
@@ -114,25 +114,25 @@ export default function ProductsScreen(props) {
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Alexander(iskender)</span>
+                                    <input type="checkbox" value="Alexandrine" onChange={filterFunc}/>
+                                    <span>Alexandrine</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
+                                    <input type="checkbox" value="Amazon" onChange={filterFunc}/>
                                     <span>Amazon</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" value="Jako" onChange={filterFunc} />
-                                    <span>Jako</span>
+                                    <input type="checkbox" value="Africangrey" onChange={filterFunc} />
+                                    <span>African Grey</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
+                                    <input type="checkbox" value="Forpus" onChange={filterFunc}/>
                                     <span>Forpus</span>
                                 </label>
                             </li>
@@ -144,8 +144,8 @@ export default function ProductsScreen(props) {
                             </li>
                             <li>
                                 <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Pakistan</span>
+                                    <input type="checkbox" value="Roseringed" onChange={filterFunc}/>
+                                    <span>Rose-ringed</span>
                                 </label>
                             </li>
                             <li>
@@ -198,7 +198,7 @@ export default function ProductsScreen(props) {
                             />
                     </div>
                 </aside>
-                <FilterableList list={filteredList.length !== 0 ? filteredList : list} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
+                <FilterableList generalList={filteredList.length !== 0 ? filteredList : generalList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
             </div>
            
             <div className="flex justify-center mt-20">

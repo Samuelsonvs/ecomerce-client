@@ -36,10 +36,7 @@ export default function RegisterScreen(props) {
     return (
         <div className="md:flex max-w-screen-2xl md:justify-center ml-2">
             <div className="mt-20 md:w-2/5 flex-shrink-0">
-                <h2 className="text-center text-gray-700 text-4xl font-extrabold">Register</h2>
-                <p className="mt-2 text-center text-2xl text-gray-600">Or
-                        <Link className="font-medium text-indigo-600 hover:text-indigo-500"> Sign In</Link>
-                </p>
+                <h2 className="text-center text-gray-700 mb-10 text-4xl font-extrabold">Register</h2>
                 <label className="opacity-70 font-semibold">Sign in with</label>
                 <div>
                     <ul className="flex flex-wrap mt-5 justify-evenly">

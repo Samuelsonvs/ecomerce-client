@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux';
-import indexListsReducer from './reduxSlice/indexListsSlice';
+import listsReducer from './reduxSlice/listsSlice';
 import productDetailReducer from './reduxSlice/productDetailSlice';
 import userSigninOrRegisterReducer from './reduxSlice/userSigninOrRegisterSlice';
-import allProduct from './reduxSlice/allProductSlice';
 
 
 export default combineReducers({
-    indexLists: indexListsReducer,
+    lists: listsReducer,
     productDetail: productDetailReducer,
     signinOrRegister: userSigninOrRegisterReducer,
-    receivedProduct: allProduct,
 });
+
+
+
+// indexListsSlice 
+// indexLists  

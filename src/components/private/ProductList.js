@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { productAll } from '../../redux/reduxSlice/allProductSlice';
+import { generalListReceiver } from '../../redux/reduxSlice/listsSlice';
 import { AiFillPlusCircle, AiOutlineDelete } from "react-icons/ai";
 import Checkbox from '@material-ui/core/Checkbox';
 import LoadingBox from '../public/loadingBox';
@@ -37,8 +37,8 @@ export default function ProductListScreen(props) {
     const handleChangeCheck = (e) => {
         if (!check) {
             setChoosen({
-                value:[...list.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage).map((state) => state._id)],
-                choosens:[...list.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)]
+                value:[...generalList.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage).map((state) => state._id)],
+                choosens:[...generalList.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)]
             })
         } else {
             setChoosen({
@@ -49,13 +49,13 @@ export default function ProductListScreen(props) {
     };
 
 
-    // list filter
+    // generalList filter
     const filterFunc = (e) => {
         e.stopPropagation();
         if (e.target.checked === true) {
             setFilteredList([
                 ...filteredList,
-                ...(list.filter((state) => 
+                ...(generalList.filter((state) => 
                     state.category === e.target.value))]);
         } else {
             setFilteredList([
@@ -92,15 +92,15 @@ export default function ProductListScreen(props) {
     };
 
   
-    const productList = useSelector((state) => state.entities.receivedProduct);
-    const { loading, error, list } = productList;
+    const productList = useSelector((state) => state.entities.lists);
+    const { loading, error, generalList } = productList;
 
 
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(productAll())
+        dispatch(generalListReceiver())
     }, [dispatch]);
 
 
@@ -109,9 +109,9 @@ export default function ProductListScreen(props) {
         if (filteredList.length !== 0) {
             setNoOfPages(Math.ceil(filteredList.length / itemPerPage))
         } else {
-            setNoOfPages(Math.ceil(list.length / itemPerPage));
+            setNoOfPages(Math.ceil(generalList.length / itemPerPage));
         }
-    }, [filteredList, list, itemPerPage]);
+    }, [filteredList, generalList, itemPerPage]);
 
     // intermediate checkbox controller by other checkbox
     useEffect(() => {
@@ -182,7 +182,7 @@ export default function ProductListScreen(props) {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    {(filteredList.length > 0 ? filteredList : list).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)
+                                    {(filteredList.length > 0 ? filteredList : generalList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)
                                     .map((state, key) => {
                                         return (
                                         <tr key={state._id}>
