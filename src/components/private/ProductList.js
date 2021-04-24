@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { generalListReceiver } from '../../redux/reduxSlice/listsSlice';
-import { AiFillPlusCircle, AiOutlineDelete } from "react-icons/ai";
+import { generalListReceiver, indexReceiver } from '../../redux/reduxSlice/listsSlice';
 import Checkbox from '@material-ui/core/Checkbox';
 import LoadingBox from '../public/loadingBox';
 import MessageBox from '../public/messageBox';
@@ -9,13 +8,43 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import PaginationUI from '../public/paginationUI';
+import { Button, FormControlLabel, FormLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import { Link } from 'react-router-dom';
 
 const id = '123456789';
 
-export default function ProductListScreen(props) {
+
+const useStyles = makeStyles({
+    root: {
+        fontSize: '1.5rem',
+        marginBottom: '5px'
+    },
+    radio: {
+        transform: 'scale(1.2)',
+    },
+    radioLabel: {
+        fontSize: '1.5rem'
+    },
+    spn : {
+        display: 'inline-block'
+    },
+    button: {
+        fontSize: '1.3rem',
+        transform: 'scale(1.1)',
+        marginRight: '20px',
+        float: 'right',
+    }
+});
+
+
+export default function ProductList(props) {
+    const classes = useStyles();
     const [check, setCheck] = useState(false);
     const [filteredList, setFilteredList] = useState([]);
     const [noOfPages, setNoOfPages] = useState(1);
+    const [radioValue, setRadioValue] = useState('');
     const [itemPerPage, setItemPerPage] = useState(4);
     const [choosen, setChoosen] = useState({
         value: [],
@@ -27,7 +56,6 @@ export default function ProductListScreen(props) {
     );       
     const USER_PATH = "/dashboard/productlist";
 
-
     // pagination
     const handleChange = (event, value) => {
         setPageNumber(value);
@@ -37,8 +65,8 @@ export default function ProductListScreen(props) {
     const handleChangeCheck = (e) => {
         if (!check) {
             setChoosen({
-                value:[...generalList.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage).map((state) => state._id)],
-                choosens:[...generalList.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)]
+                value:[...(radioValue ? productList[radioValue] : generalList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage).map((state) => state._id)],
+                choosens:[...(radioValue ? productList[radioValue] : generalList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)]
             })
         } else {
             setChoosen({
@@ -48,20 +76,10 @@ export default function ProductListScreen(props) {
         }
     };
 
-
-    // generalList filter
-    const filterFunc = (e) => {
-        e.stopPropagation();
-        if (e.target.checked === true) {
-            setFilteredList([
-                ...filteredList,
-                ...(generalList.filter((state) => 
-                    state.category === e.target.value))]);
-        } else {
-            setFilteredList([
-                ...filteredList.filter((state) => 
-                    state.category !== e.target.value)]);
-        }
+    // filter Function
+    const filterHandler = (e) => {
+        setFilteredList([...(productList[e.target.value])]);
+        setRadioValue(e.target.value)
     };
 
     // checkbox handler
@@ -95,12 +113,15 @@ export default function ProductListScreen(props) {
     const productList = useSelector((state) => state.entities.lists);
     const { loading, error, generalList } = productList;
 
+    
+
 
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(generalListReceiver())
+        dispatch(generalListReceiver());
+        dispatch(indexReceiver());
     }, [dispatch]);
 
 
@@ -111,6 +132,7 @@ export default function ProductListScreen(props) {
         } else {
             setNoOfPages(Math.ceil(generalList.length / itemPerPage));
         }
+        setPageNumber(1);
     }, [filteredList, generalList, itemPerPage]);
 
     // intermediate checkbox controller by other checkbox
@@ -124,31 +146,18 @@ export default function ProductListScreen(props) {
 
     return (
         <div>
-
             <div className="md:flex md:p-10">
                 <aside className="w-full bg-white p-5 md:w-96">
                     <div className="mt-10 ml-3 text-indigo-700">
-                        <h3 className="mb-5 border-b pb-5 font-semibold text-3xl">Kategoriler</h3>
-                        <ul id="style-1" className="mt-10">
-                            <li>
-                                <label class="checkbox">
-                                    <input type="checkbox" value="Jako" onChange={filterFunc} />
-                                    <span>TopList</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox">
-                                    <input type="checkbox" value="Monk" onChange={filterFunc} />
-                                    <span>LastEntered</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="checkbox">
-                                    <input type="checkbox" />
-                                    <span>Hype</span>
-                                </label>
-                            </li>
-                        </ul>
+                        <FormControl component="fieldset">
+                            <FormLabel className={classes.root} component="legend">Lists</FormLabel>
+                            <RadioGroup aria-label="lists" name="lists1" value={radioValue} onChange={filterHandler}>
+                                <FormControlLabel classes={{label: classes.radioLabel}} value="generalList" control={<Radio className={classes.radio} />} label="GeneralList" />
+                                <FormControlLabel classes={{label: classes.radioLabel}} value="topList" control={<Radio className={classes.radio} />} label="TopList" />
+                                <FormControlLabel classes={{label: classes.radioLabel}} value="latestList" control={<Radio className={classes.radio} />} label="LatestList" />
+                                <FormControlLabel classes={{label: classes.radioLabel}} value="hypeList" control={<Radio className={classes.radio} />} label="HypeList" />
+                            </RadioGroup>
+                        </FormControl>
                     </div>
                 </aside>
                 {loading ? (
@@ -157,12 +166,25 @@ export default function ProductListScreen(props) {
                         <MessageBox />
                     ) : (
                         <div className="w-full">
-                            <button className="float-right outline-none border focus:bg-indigo-300 rounded-full focus:outline-none" onClick={() => props.history.push(`/product/edit/${id}`)}>
-                                <AiFillPlusCircle className="text-indigo-700 w-20 h-20" />
-                            </button>
-                            <button className={check ?"float-right outline-none border focus:bg-indigo-300 rounded-full focus:outline-none": "hidden"}>
-                                <AiOutlineDelete className="text-indigo-700  w-20 h-20" />
-                            </button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                startIcon={<AddIcon />}
+                                component={Link}
+                                to="/"
+                            >
+                                Create
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                disabled= {check ? false : true}
+                                className={classes.button}
+                                startIcon={<DeleteIcon />}
+                            >
+                                Delete
+                            </Button> 
                             <table class="clear-both table-fixed">
                                 <thead>
                                     <tr>
@@ -175,9 +197,10 @@ export default function ProductListScreen(props) {
                                             inputProps={{ 'aria-label': 'primary checkbox' }}
                                         />
                                     </th>
-                                    <th class="w-2/5">Title</th>
-                                    <th class="w-1/5">Author</th>
-                                    <th class="w-1/5">Views</th>
+                                    <th class="w-1/5">Thumb</th>
+                                    <th class="w-1/5">Id</th>
+                                    <th class="w-1/5">Owner</th>
+                                    <th class="w-1/5">Category</th>
                                     <th class="w-1/5">Views</th>
                                     </tr>
                                 </thead>
@@ -195,9 +218,11 @@ export default function ProductListScreen(props) {
                                                     value={JSON.stringify(state)}
                                                 />
                                             </td>
+                                            <td><img className="w-48 h-48 object-cover" src={state.image[0]}></img></td>
                                             <td>{state._id}</td>
-                                            <td>Adam</td>
-                                            <td>858</td>
+                                            <td>{state.owner}</td>
+                                            <td>{state.category}</td>
+                                            <td>532</td>
                                         </tr>
 
                                         )

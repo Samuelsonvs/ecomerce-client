@@ -79,4 +79,4 @@ export const generalListReceiver = () => apiCallBegan({
     onStart: ListRequest.type,
     onSuccess: generalListReceived.type,
     onFail: ListFail.type
-});;
+});

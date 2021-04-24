@@ -60,6 +60,7 @@ export default function ProductsScreen(props) {
         } else {
             setNoOfPages(Math.ceil(generalList.length / itemPerPage));
         }
+        setPageNumber(1);
     }, [filteredList, generalList]);
     
     return (
