@@ -27,8 +27,35 @@ export const SwalWarning = (title, message, callback) => {
         cancelButtonColor: '#7f1d1d',
         confirmButtonText: 'Yes'
     }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
             callback();
+        }
+    })
+};
+
+
+
+export const SwalUpdateWarning = (title, message, props, callback) => {
+    Swal.fire({
+        title: title,
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#7f1d1d',
+        confirmButtonText: 'Yes'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            await callback();
+            Swal.fire(
+                'Updated!',
+                'Your file has been updated.',
+                'success'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    props.history.push('/dashboard/productlist')
+                }
+            })
         }
     })
 };

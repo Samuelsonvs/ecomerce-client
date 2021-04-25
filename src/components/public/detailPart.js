@@ -88,7 +88,7 @@ export default function DetailPart({ product }) {
                         </li>
                         <li className="py-5 flex border-b">
                             <span className="font-semibold w-1/2 sm:w-48">İlan tarihi</span>
-                            <span className="text-gray-700">{new Date(product.createdAt).toLocaleDateString()}</span>
+                            <span className="text-gray-700">{(product.updatedAt.split('T')[0])}</span>
                         </li>
                         <li className="py-5 flex border-b">
                             <span className="font-semibold w-1/2 sm:w-48">Cins</span>

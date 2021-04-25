@@ -212,7 +212,7 @@ export default function ProductList(props) {
                                     <th class="w-1/5">Id</th>
                                     <th class="w-1/5">Owner</th>
                                     <th class="w-1/5">Category</th>
-                                    <th class="w-1/5">Views</th>
+                                    <th class="w-1/5">Update</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -233,7 +233,7 @@ export default function ProductList(props) {
                                             <td>{state._id}</td>
                                             <td>{state.owner}</td>
                                             <td>{state.category}</td>
-                                            <td>532</td>
+                                            <td>{(state.updatedAt.split('.')[0]).replace('T', ' ')}</td>
                                             <td>
                                                 <Button
                                                     variant="contained"

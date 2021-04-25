@@ -7,7 +7,7 @@ const apiWithLogin = ({ dispatch, getState }) => next => async action => {
     
     const { url, method, data, onStart, onSuccess, onSign, onRegister, onError } = action.payload;
     
-    if(onStart) dispatch({ type: onStart });  
+    if(onStart) dispatch({ type: onStart });
 
     if (url) {
         next(action); 
@@ -33,6 +33,9 @@ const apiWithLogin = ({ dispatch, getState }) => next => async action => {
             if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
 
         } catch(error) {
+            if(error.response.status === 401){
+                localStorage.removeItem('userInfo')
+            };
             if (onError) {dispatch({ type: onError, payload: error.response.data.errors ? error.response.data.errors : error.message  })};
         }
     }
