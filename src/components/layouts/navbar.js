@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiSettings } from "react-icons/fi";
 import { outUser } from '../../redux/reduxSlice/userSigninOrRegisterSlice';
+import { SwalWarning } from '../../helpers/sweetalert2';
 
 export default function Navbar() {
     const [userDropdown, setUserDropdown] = useState(false);
@@ -77,7 +78,7 @@ export default function Navbar() {
     const dispatch = useDispatch();
     const signOut = () => {
         setUserDropdown(false);
-        dispatch(outUser());
+        SwalWarning('Warning!', 'Are you sure you want to logout?', () => dispatch(outUser()));
     };
 
     return (

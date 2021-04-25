@@ -11,7 +11,9 @@ import PaginationUI from '../public/paginationUI';
 import { Button, FormControlLabel, FormLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import { Link } from 'react-router-dom';
+import { SwalWarning } from '../../helpers/sweetalert2';
 
 const id = '123456789';
 
@@ -35,6 +37,9 @@ const useStyles = makeStyles({
         transform: 'scale(1.1)',
         marginRight: '20px',
         float: 'right',
+    },
+    updateButton: {
+        fontSize: '1.1rem',
     }
 });
 
@@ -102,7 +107,13 @@ export default function ProductList(props) {
     };
 
 
+    const createHandler = () => {
+        SwalWarning('Warning!', 'Are you sure you want to create new product?', () => props.history.push(`/product/edit/${id}`))
+    }
 
+    const deleteHandler = () => {
+        SwalWarning('Warning!', 'Are you sure you want to delete choosens product?', () => console.log(choosen.choosens, radioValue))
+    }
 
     // change product number in one page
     const pageChange = (event) => {
@@ -169,16 +180,16 @@ export default function ProductList(props) {
                             <Button
                                 variant="contained"
                                 color="primary"
+                                onClick={createHandler}
                                 className={classes.button}
                                 startIcon={<AddIcon />}
-                                component={Link}
-                                to="/"
                             >
                                 Create
                             </Button>
                             <Button
                                 variant="contained"
                                 color="secondary"
+                                onClick={deleteHandler}
                                 disabled= {check ? false : true}
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
@@ -218,11 +229,37 @@ export default function ProductList(props) {
                                                     value={JSON.stringify(state)}
                                                 />
                                             </td>
-                                            <td><img className="w-48 h-48 object-cover" src={state.image[0]}></img></td>
+                                            <td><img className="w-48 h-48 object-cover mx-auto" src={state.image[0]}></img></td>
                                             <td>{state._id}</td>
                                             <td>{state.owner}</td>
                                             <td>{state.category}</td>
                                             <td>532</td>
+                                            <td>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    component={Link}
+                                                    to={{
+                                                        pathname:`/dashboard/update/${state._id}`,
+                                                        value: {
+                                                            id: state._id,
+                                                            city: state.city,
+                                                            name: state.name,
+                                                            phone: state.phone,
+                                                            category: state.category,
+                                                            gender: state.gender,
+                                                            age: state.age,
+                                                            description: state.description,
+                                                            seller: state.seller,
+                                                            options: state.options
+                                                        }
+                                                    }}
+                                                    className={classes.updateButton}
+                                                    startIcon={<AutorenewIcon />}
+                                                >
+                                                Update
+                                                </Button>
+                                            </td>
                                         </tr>
 
                                         )

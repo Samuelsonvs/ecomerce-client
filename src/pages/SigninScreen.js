@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import InputLabel from '../components/public/inputLabel';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
 import { clearError, signUser } from '../redux/reduxSlice/userSigninOrRegisterSlice';
@@ -60,26 +61,18 @@ export default function SigninScreen(props) {
             <form className="form" onSubmit={submitHandler}>
                 {loading && <LoadingBox></LoadingBox>}
                 {error &&  <MessageBox variant="error">{error}</MessageBox>}
-                <div className="mt-10 mb-10">
-                    <label className="text-gray-600 font-semibold" htmlFor="email">Email address</label>
-                    <input
-                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
-                        type="email"
-                        id="email"
-                        required
-                        onChange={(e) => setEmail(e.target.value)}
-                        ></input>
-                </div>
-                <div>
-                    <label className="text-gray-600 font-semibold" htmlFor="password">Password</label>
-                    <input
-                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
-                        type="password"
-                        id="password"
-                        required
-                        onChange={(e) => setPassword(e.target.value)}
-                        ></input>
-                </div>
+                <InputLabel 
+                    type='email'
+                    tag='email'
+                    name='Email Address'
+                    callback={setEmail}
+                    />
+                <InputLabel 
+                    type='password'
+                    tag='password'
+                    name='Password'
+                    callback={setPassword}
+                    />
                 <div>
                 <div className="mt-10">
                     <label />                                         

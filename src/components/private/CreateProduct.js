@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { registerUser } from '../redux/reduxSlice/userSigninOrRegisterSlice';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
-import InputLabel from '../components/public/inputLabel';
 // import GoogleLogin from 'react-google-login';
 
 export default function RegisterScreen(props) {
@@ -73,30 +72,46 @@ export default function RegisterScreen(props) {
             <form className="form" onSubmit={submitHandler}>
                 {loading && <LoadingBox></LoadingBox>}
                 {error &&  <MessageBox variant="error">{error}</MessageBox>}
-                <InputLabel 
-                    type='text'
-                    tag='name'
-                    name='Name'
-                    callback={setName}
-                    />
-                <InputLabel 
-                    type='email'
-                    tag='email'
-                    name='Email Address'
-                    callback={setEmail}
-                    />
-                <InputLabel 
-                    type='password'
-                    tag='password'
-                    name='Password'
-                    callback={setPassword}
-                    />
-                <InputLabel 
-                    type='password'
-                    tag='confirmPassword'
-                    name='Confirm Password'
-                    callback={setConfirmPassword}
-                    />
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="name">Name</label>
+                    <input
+                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
+                        type="text"
+                        id="name"
+                        required
+                        onChange={(e) => setName(e.target.value)}
+                        ></input>
+                </div>
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="email">Email Address</label>
+                    <input
+                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
+                        type="email"
+                        id="email"
+                        required
+                        onChange={(e) => setEmail(e.target.value)}
+                        ></input>
+                </div>
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="password">Password</label>
+                    <input
+                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
+                        type="password"
+                        id="password"
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                        ></input>
+                </div>
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                        className="mt-2 block w-full h-16 border border-transparent rounded-md"
+                        type="password"
+                        id="confirmPassword"
+                        required
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        ></input>
+                </div>
                 <div>
                 <div className="mt-10">
                     <label />                                         

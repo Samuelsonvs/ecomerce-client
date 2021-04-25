@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { apiCallBegan } from '../api/api';
+import { apiCallBegan, withLoginApiCallBegan } from '../api/api';
 
 const slice = createSlice({
     name: 'productDetail',
@@ -17,7 +17,10 @@ const slice = createSlice({
             state.loading = false;
             state.product = action.payload;
         },
-
+        productUpdate: (state, action) => {
+            state.loading = false;
+            state.product = action.payload.product
+        },
         prodcutDetailFail: (state, action) => {
             state.loading = false;
             state.error = action.payload
@@ -29,6 +32,7 @@ const slice = createSlice({
 export const {
     productDetailRequested,
     productDetailReceived,
+    productUpdate,
     prodcutDetailFail
 } = slice.actions;
 export default slice.reducer;
@@ -42,3 +46,13 @@ export const detailProduct = (productId) => apiCallBegan({
     onSuccess: productDetailReceived.type,
     onError: prodcutDetailFail.type
 });
+
+
+export const updateProduct = (product) => withLoginApiCallBegan({
+    url: url + '/' + product._id,
+    method: 'put',
+    data: product,
+    onStart: productDetailRequested.type,
+    onSuccess: productUpdate.type,
+    onFail: prodcutDetailFail.type
+})
