@@ -12,27 +12,27 @@ export default function Header() {
             </div>
           
             <div className="ml-5 my-auto">
-                <nav className="hidden md:inline text-2xl lg:text-3xl text-white 2xl:text-4xl">
+                <nav className="hidden md:inline text-2xl  text-white ">
                     <ul className="flex">
                         <li className="mr-2 p-2 hover:bg-gray-600 rounded-lg">
                             <Link to="/">
                             <FiHome className="inline mb-2 mr-2" />
-                                Anasayfa</Link>
+                                HomePage</Link>
                         </li>
                         <li className="mr-2 p-2 hover:bg-gray-600 rounded-lg">
                             <Link to="/ilanlar">
                             <FiColumns className="inline mb-2 ml-5 mr-2" />
-                                Türler</Link>
+                                Species</Link>
                         </li>
                         <li className="mr-2 p-2 hover:bg-gray-600 rounded-lg">
                             <Link to="/contact">
                             <FiMapPin className="inline mb-2 ml-5 mr-2" />
-                                İletişim</Link>
+                                Contact</Link>
                         </li>
                         <li className="p-2 hover:bg-gray-600 rounded-lg">
                             <Link to="/">
                             <FiSmile className="inline mb-2 ml-5 mr-2" />
-                                Hakkımızda</Link>
+                                About Us</Link>
                         </li>
                     </ul>
                 </nav>

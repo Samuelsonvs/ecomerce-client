@@ -57,25 +57,25 @@ export default function NavbarMobileToggler() {
                 <li className="mt-80 mb-3 text-center ">
                     <Link className="block w-full py-4 hover:bg-gray-400" to="/">
                     <FiHome className="inline mr-2" />
-                    Anasayfa
+                    HomePage
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
                     <Link className="block w-full py-4 hover:bg-gray-400" to="/ilanlar">
                     <FiColumns className="inline mr-2" />
-                    Türler
+                    Species
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
                     <Link className="block w-full py-4 hover:bg-gray-400" to='/contact' >
                     <FiMapPin className="inline mr-2" />
-                    İletişim
+                    Contact
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
                     <Link className="block w-full py-4 hover:bg-gray-400" >
                     <FiSmile className="inline mr-2" />
-                    Hakkımızda
+                    About Us
                     </Link>
                 </li>
                 </ul>

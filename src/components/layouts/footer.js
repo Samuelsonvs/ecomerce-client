@@ -34,7 +34,7 @@ export default function Footer() {
                 </div>
                 <div className="mt-20 sm:mt-0">
                     <section>
-                        <h2 className="text-white font-bold">Haberdar Olun</h2>
+                        <h2 className="text-white font-bold">Keep In Touch</h2>
                         <form className="">
                             <div className="manual-form-w bg-white h-20 flex items-center mt-5">
                                 <label className="ml-3 mr-2 font-extrabold text-3xl text-gray-500" for="footerEmail">Email</label>

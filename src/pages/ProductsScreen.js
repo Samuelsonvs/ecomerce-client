@@ -8,13 +8,30 @@ import { RegionDropdown } from 'react-country-region-selector';
 import PaginationUI from '../components/public/paginationUI';
 import { generalListReceiver } from '../redux/reduxSlice/listsSlice';
 import Checkbox from '../components/public/checkbox';
+import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    radio: {
+        transform: 'scale(1.2)',
+    },
+    radioLabel: {
+        fontSize: '1.7rem',
+        color: '#4338ca',
+        fontWeight: '600'
+    },
+});
 
 
 export default function ProductsScreen(props) {
+    const classes = useStyles();
+    const [radioValue, setRadioValue] = useState('');
     const [ country ] = useState('Turkey');
-    const [ region, setRegion ] = useState('İl');
+    const [ region, setRegion ] = useState('');
     const [filteredList, setFilteredList] = useState([]);
+    const [regionList, setRegionList] = useState([]);
+    const [ageList, setAgeList] = useState([]);
     const [noOfPages, setNoOfPages] = useState(1);
+    const [chaoticList, setChaoticList] = useState([]);
     const [pageNumber, setPageNumber] = useState(
         props.location.search ? 
         props.location.search.split('=')[1] :
@@ -26,11 +43,17 @@ export default function ProductsScreen(props) {
 
     const {loading, error, generalList, hypeList} = products;
 
+
+    // Region Handler
     const selectRegion = (val) => {
-        setRegion(val)
+        setRegion(val);
+        if (val === '') {
+            setRegionList([])
+        }
     };
 
-    const filterFunc = (e) => {
+    // Checkbox Handler
+    const categoryCheckboxHandler = (e) => {
         e.stopPropagation();
         if (e.target.checked === true) {
             setFilteredList([
@@ -42,7 +65,20 @@ export default function ProductsScreen(props) {
                 ...filteredList.filter((state) => 
                     state.category !== e.target.value)]);
         }
-    }
+    };
+
+    // Radio Button Handler
+    const radioButtonHandler = (e) => {
+        if (e.target.value === 'All') {
+            //setCaoticList([]);
+            setAgeList([]);
+        } else {     
+            setAgeList([
+                ...(generalList.filter((state) => 
+                state.age === (e.target.value)))]);
+        }
+        setRadioValue(e.target.value);
+    };
 
     const handleChange = (event, value) => {
         setPageNumber(value);
@@ -63,6 +99,30 @@ export default function ProductsScreen(props) {
         }
         setPageNumber(1);
     }, [filteredList, generalList]);
+
+
+    //regionList side effect
+    useEffect(() => {
+        if (region !== '') {
+            setRegionList([
+                ...(generalList.filter((state) => 
+                state.city === region))]);
+        }
+    }, [region]);
+
+    useEffect(() => {
+        if (filteredList.length > 0 && ageList.length > 0 && regionList.length > 0) {
+            setChaoticList([
+                ...(filteredList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList[0].city))))
+            ])
+        } else if (filteredList.length > 0 && ageList.length > 0) {
+            setChaoticList([
+               ...(filteredList.filter((state) => state.age === (ageList[0].age) )) 
+            ])
+        } else if (null) {
+            console.log('ss')
+        }
+    }, [filteredList, ageList])
     
     return (
         <>
@@ -78,18 +138,18 @@ export default function ProductsScreen(props) {
                     <div className="mt-10 ml-3 text-indigo-700">
                         <h3 className="mb-5 border-b pb-5 font-semibold text-3xl">Kategoriler</h3>
                         <ul id="style-1" className="mt-10">
-                            <Checkbox value={"Budgie"} fnc={filterFunc}/>
-                            <Checkbox value={"Canary"} fnc={filterFunc}/>
-                            <Checkbox value={"Finch"} fnc={filterFunc}/>
-                            <Checkbox value={"Lovebird"} fnc={filterFunc}/>
-                            <Checkbox value={"Cockatiel"} fnc={filterFunc}/>
-                            <Checkbox value={"Kakadu"} fnc={filterFunc}/>
-                            <Checkbox value={"Alexandrine"} fnc={filterFunc}/>
-                            <Checkbox value={"Amazon"} fnc={filterFunc}/>
-                            <Checkbox value={"Africangrey"} name={"African Grey"} fnc={filterFunc}/>
-                            <Checkbox value={"Forpus"} fnc={filterFunc}/>
-                            <Checkbox value={"Monk"} fnc={filterFunc}/>
-                            <Checkbox value={"Roseringed"} name={"Rose-ringed"} fnc={filterFunc}/>
+                            <Checkbox value={"Budgie"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Canary"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Finch"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Lovebird"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Cockatiel"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Kakadu"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Alexandrine"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Amazon"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Africangrey"} name={"African Grey"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Forpus"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Monk"} fnc={categoryCheckboxHandler}/>
+                            <Checkbox value={"Roseringed"} name={"Rose-ringed"} fnc={categoryCheckboxHandler}/>
                             <li>
                                 <label class="checkbox">
                                     <input type="checkbox" />
@@ -101,10 +161,15 @@ export default function ProductsScreen(props) {
                     <div className="mt-20 ml-3">
                         <h3 className="mb-5 border-b pb-5 font-semibold text-2xl text-indigo-700">Age</h3>
                         <ul className="text-white block p-4">
-                            <Checkbox value={"0-5 month"} fnc={filterFunc}/>
-                            <Checkbox value={"6-11 month"} fnc={filterFunc}/>
-                            <Checkbox value={"1-2 year"} fnc={filterFunc}/>
-                            <Checkbox value={"2+ year"} fnc={filterFunc}/>                  
+                        <FormControl component="fieldset">
+                            <RadioGroup aria-label="lists" name="lists1" value={radioValue} onChange={radioButtonHandler}>
+                                <FormControlLabel  classes={{label: classes.radioLabel}} value="0-5 month" control={<Radio className={classes.radio} />} label="0-5 month" />
+                                <FormControlLabel  classes={{label: classes.radioLabel}} value="6-11 month" control={<Radio className={classes.radio} />} label="6-11 month" />
+                                <FormControlLabel  classes={{label: classes.radioLabel}} value="1-2 year" control={<Radio className={classes.radio} />} label="1-2 year" />
+                                <FormControlLabel  classes={{label: classes.radioLabel}} value="2+ year" control={<Radio className={classes.radio} />} label="2+ year" />
+                                <FormControlLabel  classes={{label: classes.radioLabel}} value="All" control={<Radio className={classes.radio} />} label="All" />
+                            </RadioGroup>
+                        </FormControl>                 
                         </ul>
                     </div>
                     <div className="mt-20">
