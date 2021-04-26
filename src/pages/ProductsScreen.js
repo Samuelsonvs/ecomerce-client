@@ -27,7 +27,7 @@ export default function ProductsScreen(props) {
     const [radioValue, setRadioValue] = useState('');
     const [ country ] = useState('Turkey');
     const [ region, setRegion ] = useState('');
-    const [filteredList, setFilteredList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
     const [regionList, setRegionList] = useState([]);
     const [ageList, setAgeList] = useState([]);
     const [noOfPages, setNoOfPages] = useState(1);
@@ -56,13 +56,13 @@ export default function ProductsScreen(props) {
     const categoryCheckboxHandler = (e) => {
         e.stopPropagation();
         if (e.target.checked === true) {
-            setFilteredList([
-                ...filteredList,
+            setCategoryList([
+                ...categoryList,
                 ...(generalList.filter((state) => 
                     state.category === e.target.value))]);
         } else {
-            setFilteredList([
-                ...filteredList.filter((state) => 
+            setCategoryList([
+                ...categoryList.filter((state) => 
                     state.category !== e.target.value)]);
         }
     };
@@ -91,14 +91,15 @@ export default function ProductsScreen(props) {
         dispatch(generalListReceiver());
     }, [dispatch]);
 
+    // If one list active at least 
     useEffect(() => {
-        if (filteredList.length !== 0) {
-            setNoOfPages(Math.ceil(filteredList.length / itemPerPage))
+        if (chaoticList.length !== 0) {
+            setNoOfPages(Math.ceil(chaoticList.length / itemPerPage))
         } else {
             setNoOfPages(Math.ceil(generalList.length / itemPerPage));
         }
         setPageNumber(1);
-    }, [filteredList, generalList]);
+    }, [chaoticList, generalList]);
 
 
     //regionList side effect
@@ -110,19 +111,40 @@ export default function ProductsScreen(props) {
         }
     }, [region]);
 
+    // Filter effect
     useEffect(() => {
-        if (filteredList.length > 0 && ageList.length > 0 && regionList.length > 0) {
+        if (categoryList.length > 0 && ageList.length > 0 && regionList.length > 0) {
             setChaoticList([
-                ...(filteredList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList[0].city))))
+                ...(categoryList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList[0].city))))
             ])
-        } else if (filteredList.length > 0 && ageList.length > 0) {
+        } else if (categoryList.length > 0 && ageList.length > 0) {
             setChaoticList([
-               ...(filteredList.filter((state) => state.age === (ageList[0].age) )) 
+               ...(categoryList.filter((state) => state.age === (ageList[0].age) )) 
             ])
-        } else if (null) {
-            console.log('ss')
+        } else if (categoryList.length > 0 && regionList.length > 0 ) {
+            setChaoticList([
+                ...(categoryList.filter((state) => state.city === (ageList[0].city) ))
+            ])
+        } else if (ageList.length > 0 && regionList.length) {
+            setChaoticList([
+                ...(ageList.filter((state) => state.city === (ageList[0].city)))
+            ])
+        } else if (categoryList.length > 0) {
+            setChaoticList([
+                ...categoryList
+            ])
+        } else if (ageList.length > 0) {
+            setChaoticList([
+                ...ageList
+            ])
+        } else if (regionList.length > 0) {
+            setChaoticList([
+                ...regionList
+            ])
+        } else {
+            setChaoticList([])
         }
-    }, [filteredList, ageList])
+    }, [categoryList, ageList, regionList]);
     
     return (
         <>
@@ -185,7 +207,7 @@ export default function ProductsScreen(props) {
                             />
                     </div>
                 </aside>
-                <FilterableList generalList={filteredList.length !== 0 ? filteredList : generalList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
+                <FilterableList generalList={chaoticList.length !== 0 ? chaoticList : generalList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
             </div>
            
             <div className="flex justify-center mt-20">
