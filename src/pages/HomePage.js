@@ -34,8 +34,8 @@ export default function HomePage() {
             ) : error ? (
                 <MessageBox variant={"error"} >Hata Mesajı</MessageBox>
             ) : (
-            <div className="flex justify-center">
-                <div className="max-w-screen-2xl">
+            <div className="max-w-screen-xl mx-auto">
+                <div>
                     <div className="flex-wrap flex">
                         <InfoCard 
                             variety={'Cockatiel'}
@@ -64,7 +64,7 @@ export default function HomePage() {
                             info={'Amazon parrots are prone to becoming obese, which is why owners should pay attention to the amount and types of food offered daily.'}
                         />
                     </div>
-                    <div className="manual-toplist h-auto max-w-screen-xl">
+                    <div className="manual-toplist h-auto">
                         <h1 className="text-center mt-32 text-7xl text-indigo-900 pb-20 border-b-2 border-indigo-300">Top
                             <span className="font-black"> List</span>
                         </h1>

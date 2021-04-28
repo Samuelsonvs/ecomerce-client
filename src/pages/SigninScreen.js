@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Button from '../components/public/button';
+import CreateButton from '../components/public/createButton';
 import InputLabel from '../components/public/inputLabel';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
@@ -76,7 +76,7 @@ export default function SigninScreen(props) {
                     />
                 <div>
                 <div className="mt-10">
-                    <Button name={'Sign in'} />
+                    <CreateButton name={'Sign in'} />
                 </div>
                 </div>
 

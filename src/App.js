@@ -6,6 +6,7 @@ import Navbar from './components/layouts/navbar';
 import Header from './components/layouts/header';
 import AdminRoute from './components/private/AdminRoute';
 import LoadingBox from './components/public/loadingBox';
+import UserRoute from './components/private/UserRoute';
 
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const ProductsScreen = React.lazy(() => import("./pages/ProductsScreen"));
@@ -19,6 +20,7 @@ const OrderList = React.lazy(() => import('./components/private/OrderList'));
 const CustomerList = React.lazy(() => import('./components/private/CustomerList'));
 const ProductEdit = React.lazy(() => import('./components/private/ProductEdit'));
 const UpdateProduct = React.lazy(() => import('./components/private/UpdateProduct'));
+const CreateProduct = React.lazy(() => import('./components/private/CreateProduct'));
 
 export default function App() {
   return (
@@ -36,11 +38,12 @@ export default function App() {
         <main className="bg-indigo-50">
           <Switch>
             <Route exact path="/" component={props => <HomePage {...props} />}></Route>
-            <Route path="/ilanlar" component={props => <ProductsScreen {...props} />}></Route>
-            <Route path="/ilan/:id" component={props => <ProductDetailScreen {...props} />}></Route>
+            <Route path="/adverts" component={props => <ProductsScreen {...props} />}></Route>
+            <Route path="/advert/:id" component={props => <ProductDetailScreen {...props} />}></Route>
             <Route path="/signin" component={props => <SigninScreen {...props} />}></Route>
             <Route path="/register" component={props => <RegisterScreen {...props} />}></Route>
             <Route path="/contact" component={props => <ContactScreen {...props} />}></Route>
+            <UserRoute path="/create" component={props => <CreateProduct {...props} />}></UserRoute>
             <AdminRoute exact path="/dashboard" component={props => <Dashboard {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/productlist" component={props => <ProductList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/orderlist" component={props => <OrderList {...props} />}></AdminRoute>

@@ -11,11 +11,11 @@ export default function ListItemInfoCard({ image, name, id, age, city, category,
                     </div>
                     <div class="p-4 md:p-8">
                         <div class="uppercase tracking-wide text-sm text-indigo-200 font-semibold">{category}</div>
-                        <Link to={`/ilan/${id}`} class="block mt-1 text-xl leading-tight text-yellow-200 font-semibold border-b pb-3 hover:text-yellow-400">{name}</Link>
+                        <Link to={`/advert/${id}`} class="block mt-1 text-xl leading-tight text-yellow-200 font-semibold border-b pb-3 hover:text-yellow-400">{name}</Link>
                         <p class="mt-2 text-base text-white">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
                         <div className="h-1/3 flex justify-between items-end">
-                            <span className="px-4 text-indigo-100 bg-indigo-500 rounded-md">{age}</span>
-                            <span className="px-4 text-indigo-100 bg-indigo-500 rounded-md">{city}</span>
+                            <span className="px-4 text-indigo-100 bg-green-500 rounded-md">{age}</span>
+                            <span className="px-4 text-indigo-100 bg-yellow-600 rounded-md">{city}</span>
                         </div>
                     </div>
                 </div>

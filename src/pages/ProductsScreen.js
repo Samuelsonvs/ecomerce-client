@@ -38,7 +38,7 @@ export default function ProductsScreen(props) {
         1);
         
     const itemPerPage = 4;
-    const USER_PATH = "/ilanlar";
+    const USER_PATH = "/adverts";
     const products = useSelector((state) => state.entities.lists);
 
     const {loading, error, generalList, hypeList} = products;
@@ -123,7 +123,7 @@ export default function ProductsScreen(props) {
             ])
         } else if (categoryList.length > 0 && regionList.length > 0 ) {
             setChaoticList([
-                ...(categoryList.filter((state) => state.city === (ageList[0].city) ))
+                ...(categoryList.filter((state) => state.city === (regionList[0].city) ))
             ])
         } else if (ageList.length > 0 && regionList.length) {
             setChaoticList([
@@ -153,7 +153,7 @@ export default function ProductsScreen(props) {
             ) : error ? (
                 <MessageBox />
             ) : (
-            <>
+            <div className="max-w-screen-2xl mx-auto">
             <Hype hypeList={hypeList} />
             <div className="md:flex md:p-10">
                 <aside className="w-full bg-white p-5 md:w-96">
@@ -218,7 +218,7 @@ export default function ProductsScreen(props) {
                         handleChange={handleChange}
                 />
             </div>
-            </>
+            </div>
             )}
         </>
     )

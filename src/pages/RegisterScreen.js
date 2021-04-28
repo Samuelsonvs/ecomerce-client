@@ -5,7 +5,7 @@ import { registerUser } from '../redux/reduxSlice/userSigninOrRegisterSlice';
 import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
 import InputLabel from '../components/public/inputLabel';
-import Button from '../components/public/button';
+import CreateButton from '../components/public/createButton';
 // import GoogleLogin from 'react-google-login';
 
 export default function RegisterScreen(props) {
@@ -100,7 +100,7 @@ export default function RegisterScreen(props) {
                     />
                 <div>
                 <div className="mt-10">
-                    <Button name={'Register'} />
+                    <CreateButton name={'Register'} />
                 </div>
                 </div>
 

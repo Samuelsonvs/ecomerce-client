@@ -6,7 +6,7 @@ import LoadingBox from '../public/loadingBox';
 import MessageBox from '../public/messageBox';
 import { SwalWarning, SwalUpdateWarning } from '../../helpers/sweetalert2';
 import { updateProduct } from '../../redux/reduxSlice/productDetailSlice';
-import Button from '../public/button';
+import CreateButton from '../public/createButton';
 
 export default function UpdateProduct(props) {
     const value = props.location.value;
@@ -124,7 +124,7 @@ export default function UpdateProduct(props) {
                     />
                 <div>
                 <div className="mt-10">
-                    <Button name={'Update'} />
+                    <CreateButton name={'Update'} />
                 </div>
                 </div>
             </form>

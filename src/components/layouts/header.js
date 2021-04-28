@@ -20,7 +20,7 @@ export default function Header() {
                                 HomePage</Link>
                         </li>
                         <li className="mr-2 p-2 hover:bg-gray-600 rounded-lg">
-                            <Link to="/ilanlar">
+                            <Link to="/adverts">
                             <FiColumns className="inline mb-2 ml-5 mr-2" />
                                 Species</Link>
                         </li>

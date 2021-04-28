@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Button({name}) {
+export default function CreateButton({name}) {
     return (
         <>
             <label />                                         
