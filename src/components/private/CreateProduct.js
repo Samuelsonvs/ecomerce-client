@@ -7,13 +7,14 @@ import MessageBox from '../public/messageBox';
 import { SwalWarning, SwalUpdateWarning, SwalError } from '../../helpers/sweetalert2';
 import CreateButton from '../public/createButton';
 import { RegionDropdown } from 'react-country-region-selector';
-import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Checkbox from '../public/checkbox';
 
 import Axios from 'axios';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { createProduct } from '../../redux/reduxSlice/productDetailSlice';
+import RadioGroupSchema from '../public/radioGroupSchema';
 
 const useStyles = makeStyles({
     input: {
@@ -21,14 +22,6 @@ const useStyles = makeStyles({
     },
     button: {
         fontSize: '1.3rem'
-    },
-    radio: {
-        transform: 'scale(1.2)',
-    },
-    radioLabel: {
-        fontSize: '1.7rem',
-        color: '#4338ca',
-        fontWeight: '600'
     },
 });
 
@@ -38,6 +31,7 @@ export default function CreateProduct(props) {
     const [city, setCity] = useState('');
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
+    const [phone, setPhone] = useState('');
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
     const [description, setDescription] = useState('');
@@ -76,41 +70,51 @@ export default function CreateProduct(props) {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        if (pictures.length < 1) {
-            SwalError('Pls insert image')
+        if (
+            city.length < 1 || 
+            category.length < 1 || 
+            gender.length < 1 || 
+            age.length < 1 || 
+            seller.length < 1 
+            ) {
+            SwalError('Please enter the information completely')
         } else {
-
-            // console.log(pictures[0].size)
-            if ((pictures.map((state) => state.size > 350000 ? false : true)).includes(false)) {
-                SwalError('Max image size exceed')
+            if (pictures.length < 1) {
+                SwalError('Pls insert image')
             } else {
-                const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
-                const bodyFormData = new FormData();
-                pictures.map((state) => bodyFormData.append('image', state));
-                await Axios.post('/api/uploads/create', bodyFormData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${userInfo.token}`,
-                        Path: randompath 
-                    },
-                }).then((state) => state.statusText === 'OK' ?
-                SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, () => {
-                    dispatch(
-                        createProduct({
-                            city,
-                            name,
-                            category,
-                            gender,
-                            image: randompath,
-                            age,
-                            description,
-                            seller,
-                            options
-                        })
+                if ((pictures.map((state) => state.size > 350000 ? false : true)).includes(false)) {
+                    SwalError('Max image size exceed')
+                } else {
+                    const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
+                    const bodyFormData = new FormData();
+                    pictures.map((state) => bodyFormData.append('image', state));
+                    await Axios.post('/api/uploads/create', bodyFormData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            Authorization: `Bearer ${userInfo.token}`,
+                            Path: randompath 
+                        },
+                    }).then((state) => state.statusText === 'OK' ?
+                    SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, () => {
+                        dispatch(
+                            createProduct({
+                                name,
+                                city,
+                                owner: userInfo.name,
+                                phone,
+                                category,
+                                gender,
+                                image: randompath,
+                                age,
+                                description,
+                                seller,
+                                options
+                            })
+                        )
+                    })  :
+                    console.log('image upload fail')
                     )
-                })  :
-                console.log('image upload fail')
-                ).then((state) => console.log(state))
+                }
             }
         }
     }
@@ -176,13 +180,26 @@ export default function CreateProduct(props) {
                     name='Gender'
                     value={gender}
                     />
-                <FormControl component="fieldset">
-                    <RadioGroup aria-label="lists" name="lists1" value={gender} onChange={(e) => setGender(e.target.value)}>
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="male" control={<Radio className={classes.radio} />} label="Male" />
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="female" control={<Radio className={classes.radio} />} label="Female" />
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="mixed" control={<Radio className={classes.radio} />} label="Mixed" />                    
-                    </RadioGroup>
-                </FormControl>   
+                <RadioGroupSchema
+                    arialabel={"lists"}
+                    name={"lists1"}
+                    value={gender}
+                    values={
+                        [
+                            "male", 
+                            "female",
+                            "mixed",
+                        ]
+                    }
+                    label={
+                        [
+                            "Male",
+                            "Female",
+                            "Mixed"
+                        ]
+                    }
+                    callback={setGender}
+                    />   
                 <InputLabel 
                     type='text'
                     disable={true}
@@ -190,14 +207,21 @@ export default function CreateProduct(props) {
                     name='Age'
                     value={age}
                     />
-                <FormControl component="fieldset">
-                    <RadioGroup aria-label="agelist" name="agelists1" value={age} onChange={(e) => setAge(e.target.value)}>
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="0-5 month" control={<Radio className={classes.radio} />} label="0-5 month" />
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="6-11 month" control={<Radio className={classes.radio} />} label="6-11 month" />
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="1-2 year" control={<Radio className={classes.radio} />} label="1-2 year" />                    
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="2+ year" control={<Radio className={classes.radio} />} label="2+ year" />                    
-                    </RadioGroup>
-                </FormControl>
+                <RadioGroupSchema
+                    arialabel={"agelist"}
+                    name={"agelist1"}
+                    value={age}
+                    values={
+                        [
+                            "0-5 month", 
+                            "6-11 month",
+                            "1-2 year",
+                            "2+ year"
+                        ]
+                    }
+                    callback={setAge}
+                    />
+                
                 <InputLabel 
                     type='text'
                     tag='name'
@@ -205,11 +229,21 @@ export default function CreateProduct(props) {
                     value={name}
                     callback={setName}
                     />
+                <InputLabel 
+                    type='tel'
+                    tag='phone'
+                    name='Phone'
+                    pattern={"[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}"}
+                    placeholder={"123 456 78 91"}
+                    value={phone}
+                    callback={setPhone}
+                    />
                 <div className="mt-10">
                     <label className="text-gray-600 font-semibold" htmlFor='description'>Description</label>
                     <textarea
-                        className="mt-2 block w-full p-2 h-16 border border-transparent rounded-md"
+                        className="mt-2 resize-y  block w-full p-2 border border-transparent rounded-md"
                         type='text'
+                        rows='4'
                         id='description'
                         defaultValue={description}
                         required
@@ -268,12 +302,18 @@ export default function CreateProduct(props) {
                     name='Seller'
                     value={seller}
                     />
-                <FormControl component="fieldset">
-                    <RadioGroup aria-label="agelist" name="agelists1" value={seller} onChange={(e) => setSeller(e.target.value)}>
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="By owner" control={<Radio className={classes.radio} />} label="By owner" />
-                        <FormControlLabel  classes={{label: classes.radioLabel}} value="Producer" control={<Radio className={classes.radio} />} label="Producer" />
-                    </RadioGroup>
-                </FormControl> 
+                <RadioGroupSchema
+                    arialabel={"seller"}
+                    name={"seller1"}
+                    value={seller}
+                    values={
+                        [
+                            "By owner", 
+                            "Producer",
+                        ]
+                    }
+                    callback={setSeller}
+                    />
                 <div>
                 <ul id="style-1" className="mt-10">
                     <label className="mb-10 text-gray-600 font-semibold block">Options</label>

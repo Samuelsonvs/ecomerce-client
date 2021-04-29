@@ -100,8 +100,9 @@ export default function UpdateProduct(props) {
                 <div className="mt-10">
                     <label className="text-gray-600 font-semibold" htmlFor='description'>Description</label>
                     <textarea
-                        className="mt-2 block w-full p-2 h-16 border border-transparent rounded-md"
+                        className="mt-2 resize-y block w-full p-2 border border-transparent rounded-md"
                         type='text'
+                        rows='4'
                         id='description'
                         defaultValue={description}
                         required

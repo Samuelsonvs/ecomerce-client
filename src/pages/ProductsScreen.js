@@ -8,23 +8,10 @@ import { RegionDropdown } from 'react-country-region-selector';
 import PaginationUI from '../components/public/paginationUI';
 import { generalListReceiver } from '../redux/reduxSlice/listsSlice';
 import Checkbox from '../components/public/checkbox';
-import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
-
-const useStyles = makeStyles({
-    radio: {
-        transform: 'scale(1.2)',
-    },
-    radioLabel: {
-        fontSize: '1.7rem',
-        color: '#4338ca',
-        fontWeight: '600'
-    },
-});
-
+import RadioGroupSchema from '../components/public/radioGroupSchema';
 
 export default function ProductsScreen(props) {
-    const classes = useStyles();
-    const [radioValue, setRadioValue] = useState('');
+    const [radioValue, setRadioValue] = useState('All');
     const [ country ] = useState('Turkey');
     const [ region, setRegion ] = useState('');
     const [categoryList, setCategoryList] = useState([]);
@@ -52,6 +39,8 @@ export default function ProductsScreen(props) {
         }
     };
 
+    console.log(region === '', 'region');
+    console.log(radioValue === '','radiovalue');
     // Checkbox Handler
     const categoryCheckboxHandler = (e) => {
         e.stopPropagation();
@@ -69,15 +58,15 @@ export default function ProductsScreen(props) {
 
     // Radio Button Handler
     const radioButtonHandler = (e) => {
-        if (e.target.value === 'All') {
+        if (e === 'All') {
             //setCaoticList([]);
             setAgeList([]);
         } else {     
             setAgeList([
                 ...(generalList.filter((state) => 
-                state.age === (e.target.value)))]);
+                state.age === (e)))]);
         }
-        setRadioValue(e.target.value);
+        setRadioValue(e);
     };
 
     const handleChange = (event, value) => {
@@ -93,7 +82,7 @@ export default function ProductsScreen(props) {
 
     // If one list active at least 
     useEffect(() => {
-        if (chaoticList.length !== 0) {
+        if (chaoticList.length !== 0 || region !== '' || radioValue !== 'All') {
             setNoOfPages(Math.ceil(chaoticList.length / itemPerPage))
         } else {
             setNoOfPages(Math.ceil(generalList.length / itemPerPage));
@@ -113,21 +102,21 @@ export default function ProductsScreen(props) {
 
     // Filter effect
     useEffect(() => {
-        if (categoryList.length > 0 && ageList.length > 0 && regionList.length > 0) {
+        if (categoryList.length > 0 && region !== '' && radioValue !== 'All') {
             setChaoticList([
-                ...(categoryList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList[0].city))))
+                ...(categoryList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList.length > 1 ? regionList[0].city : null))))
             ])
         } else if (categoryList.length > 0 && ageList.length > 0) {
             setChaoticList([
                ...(categoryList.filter((state) => state.age === (ageList[0].age) )) 
             ])
-        } else if (categoryList.length > 0 && regionList.length > 0 ) {
+        } else if (categoryList.length > 0 && region !== '' ) {
             setChaoticList([
-                ...(categoryList.filter((state) => state.city === (regionList[0].city) ))
+                ...(categoryList.filter((state) => state.city === (regionList.length > 0 ? regionList[0].city : 'Iceland') ))
             ])
-        } else if (ageList.length > 0 && regionList.length) {
+        } else if (ageList.length > 0 && region !== '') {
             setChaoticList([
-                ...(ageList.filter((state) => state.city === (ageList[0].city)))
+                ...(ageList.filter((state) => state.city === (regionList.length > 0 ? regionList[0].city : 'Iceland')))
             ])
         } else if (categoryList.length > 0) {
             setChaoticList([
@@ -144,7 +133,7 @@ export default function ProductsScreen(props) {
         } else {
             setChaoticList([])
         }
-    }, [categoryList, ageList, regionList]);
+    }, [categoryList, ageList, regionList, region, radioValue]);
     
     return (
         <>
@@ -183,15 +172,21 @@ export default function ProductsScreen(props) {
                     <div className="mt-20 ml-3">
                         <h3 className="mb-5 border-b pb-5 font-semibold text-2xl text-indigo-700">Age</h3>
                         <ul className="text-white block p-4">
-                        <FormControl component="fieldset">
-                            <RadioGroup aria-label="lists" name="lists1" value={radioValue} onChange={radioButtonHandler}>
-                                <FormControlLabel  classes={{label: classes.radioLabel}} value="0-5 month" control={<Radio className={classes.radio} />} label="0-5 month" />
-                                <FormControlLabel  classes={{label: classes.radioLabel}} value="6-11 month" control={<Radio className={classes.radio} />} label="6-11 month" />
-                                <FormControlLabel  classes={{label: classes.radioLabel}} value="1-2 year" control={<Radio className={classes.radio} />} label="1-2 year" />
-                                <FormControlLabel  classes={{label: classes.radioLabel}} value="2+ year" control={<Radio className={classes.radio} />} label="2+ year" />
-                                <FormControlLabel  classes={{label: classes.radioLabel}} value="All" control={<Radio className={classes.radio} />} label="All" />
-                            </RadioGroup>
-                        </FormControl>                 
+                        <RadioGroupSchema
+                            arialabel={"lists"}
+                            name={"lists1"}
+                            value={radioValue}
+                            values={
+                                [
+                                    "0-5 month", 
+                                    "6-11 month",
+                                    "1-2 year",
+                                    "2+ year",
+                                    "All"
+                                ]
+                            }
+                            callback={radioButtonHandler}
+                        />                                        
                         </ul>
                     </div>
                     <div className="mt-20">
@@ -207,7 +202,7 @@ export default function ProductsScreen(props) {
                             />
                     </div>
                 </aside>
-                <FilterableList generalList={chaoticList.length !== 0 ? chaoticList : generalList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
+                <FilterableList generalList={chaoticList.length !== 0 || region !== '' || radioValue !== 'All'  ? chaoticList : generalList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
             </div>
            
             <div className="flex justify-center mt-20">

@@ -8,12 +8,13 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import PaginationUI from '../public/paginationUI';
-import { Button, FormControlLabel, FormLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import { Link } from 'react-router-dom';
 import { SwalWarning } from '../../helpers/sweetalert2';
+import RadioGroupSchema from '../public/radioGroupSchema';
 
 const id = '123456789';
 
@@ -22,15 +23,6 @@ const useStyles = makeStyles({
     root: {
         fontSize: '1.5rem',
         marginBottom: '5px'
-    },
-    radio: {
-        transform: 'scale(1.2)',
-    },
-    radioLabel: {
-        fontSize: '1.5rem'
-    },
-    spn : {
-        display: 'inline-block'
     },
     button: {
         fontSize: '1.3rem',
@@ -83,8 +75,8 @@ export default function ProductList(props) {
 
     // filter Function
     const filterHandler = (e) => {
-        setFilteredList([...(productList[e.target.value])]);
-        setRadioValue(e.target.value)
+        setFilteredList([...(productList[e])]);
+        setRadioValue(e)
     };
 
     // checkbox handler
@@ -160,15 +152,28 @@ export default function ProductList(props) {
             <div className="md:flex md:p-10">
                 <aside className="w-full bg-white p-5 md:w-96">
                     <div className="mt-10 ml-3 text-indigo-700">
-                        <FormControl component="fieldset">
-                            <FormLabel className={classes.root} component="legend">Lists</FormLabel>
-                            <RadioGroup aria-label="lists" name="lists1" value={radioValue} onChange={filterHandler}>
-                                <FormControlLabel classes={{label: classes.radioLabel}} value="generalList" control={<Radio className={classes.radio} />} label="GeneralList" />
-                                <FormControlLabel classes={{label: classes.radioLabel}} value="topList" control={<Radio className={classes.radio} />} label="TopList" />
-                                <FormControlLabel classes={{label: classes.radioLabel}} value="latestList" control={<Radio className={classes.radio} />} label="LatestList" />
-                                <FormControlLabel classes={{label: classes.radioLabel}} value="hypeList" control={<Radio className={classes.radio} />} label="HypeList" />
-                            </RadioGroup>
-                        </FormControl>
+                        <RadioGroupSchema
+                            arialabel={"lists"}
+                            name={"lists1"}
+                            value={radioValue}
+                            values={
+                                [
+                                    "generalList", 
+                                    "topList",
+                                    "latestList",
+                                    "hypeList"
+                                ]
+                            }
+                            label={
+                                [
+                                    "GeneralList", 
+                                    "TopList",
+                                    "LatestList",
+                                    "HypeList"
+                                ]
+                            }
+                            callback={filterHandler}
+                        />
                     </div>
                 </aside>
                 {loading ? (
