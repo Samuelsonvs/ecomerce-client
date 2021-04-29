@@ -1,10 +1,10 @@
 import InputLabel from '../public/inputLabel';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LoadingBox from '../public/loadingBox';
 import MessageBox from '../public/messageBox';
-import { SwalWarning, SwalUpdateWarning } from '../../helpers/sweetalert2';
+import { SwalWarning, SwalUpdateWarning, SwalError } from '../../helpers/sweetalert2';
 import CreateButton from '../public/createButton';
 import { RegionDropdown } from 'react-country-region-selector';
 import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup } from '@material-ui/core';
@@ -13,6 +13,7 @@ import Checkbox from '../public/checkbox';
 import Axios from 'axios';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { createProduct } from '../../redux/reduxSlice/productDetailSlice';
 
 const useStyles = makeStyles({
     input: {
@@ -33,6 +34,7 @@ const useStyles = makeStyles({
 
 export default function CreateProduct(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [city, setCity] = useState('');
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
@@ -59,6 +61,7 @@ export default function CreateProduct(props) {
         setPictures([]);
       }
 
+    // are you want to your product inside topList or hypList or double
     const optionHandler = (e) => {
         e.stopPropagation();
         if (e.target.checked === true) {
@@ -71,13 +74,51 @@ export default function CreateProduct(props) {
     const userSignin = useSelector((state) => state.entities.signinOrRegister);
     const { userInfo, loading, error } = userSignin;
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        if (pictures[0].size < 350000) {
-            console.log(pictures[0].size)
+        if (pictures.length < 1) {
+            SwalError('Pls insert image')
+        } else {
+
+            // console.log(pictures[0].size)
+            if ((pictures.map((state) => state.size > 350000 ? false : true)).includes(false)) {
+                SwalError('Max image size exceed')
+            } else {
+                const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
+                const bodyFormData = new FormData();
+                pictures.map((state) => bodyFormData.append('image', state));
+                await Axios.post('/api/uploads/create', bodyFormData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${userInfo.token}`,
+                        Path: randompath 
+                    },
+                }).then((state) => state.statusText === 'OK' ?
+                SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, () => {
+                    dispatch(
+                        createProduct({
+                            city,
+                            name,
+                            category,
+                            gender,
+                            image: randompath,
+                            age,
+                            description,
+                            seller,
+                            options
+                        })
+                    )
+                })  :
+                console.log('image upload fail')
+                ).then((state) => console.log(state))
+            }
         }
     }
 
+    // Max picture 6
+    useEffect(() => {
+        if (pictures.length > 6) setPictures(pictures.slice(0,6))
+    }, [pictures])
 
     return (
         <div className="md:flex max-w-screen-2xl md:justify-center ml-2">

@@ -21,6 +21,10 @@ const slice = createSlice({
             state.loading = false;
             state.product = action.payload.product
         },
+        productCreate: (state, action) => {
+            state.loading = false;
+            state.product = action.payload
+        },
         prodcutDetailFail: (state, action) => {
             state.loading = false;
             state.error = action.payload
@@ -33,6 +37,7 @@ export const {
     productDetailRequested,
     productDetailReceived,
     productUpdate,
+    productCreate,
     prodcutDetailFail
 } = slice.actions;
 export default slice.reducer;
@@ -54,5 +59,15 @@ export const updateProduct = (product) => withLoginApiCallBegan({
     data: product,
     onStart: productDetailRequested.type,
     onSuccess: productUpdate.type,
+    onFail: prodcutDetailFail.type
+})
+
+
+export const createProduct = (product) => withLoginApiCallBegan({
+    url: url + '/create',
+    method: 'post',
+    data: product,
+    onStart: productDetailRequested.type,
+    onSuccess: productCreate.type,
     onFail: prodcutDetailFail.type
 })
