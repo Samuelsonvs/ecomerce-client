@@ -43,13 +43,13 @@ export default function App() {
             <Route path="/signin" component={props => <SigninScreen {...props} />}></Route>
             <Route path="/register" component={props => <RegisterScreen {...props} />}></Route>
             <Route path="/contact" component={props => <ContactScreen {...props} />}></Route>
+            <Route exact path="/dashboard" component={props => <Dashboard {...props} />}></Route>
             <UserRoute path="/create" component={props => <CreateProduct {...props} />}></UserRoute>
-            <AdminRoute exact path="/dashboard" component={props => <Dashboard {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/productlist" component={props => <ProductList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/orderlist" component={props => <OrderList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/customerlist" component={props => <CustomerList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/update/:id" component={props => <UpdateProduct {...props} />}></AdminRoute>
-            <AdminRoute path="/product/edit/:id" component={props => <ProductEdit {...props} />}></AdminRoute>
+            <AdminRoute path="/product/edit/:id" component={props => <ProductEdit {...props} />}></AdminRoute> 
           </Switch>
         </main>
         <footer className="bg-indigo-50">

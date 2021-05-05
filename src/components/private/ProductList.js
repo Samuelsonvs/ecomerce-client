@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { generalListReceiver, indexReceiver } from '../../redux/reduxSlice/listsSlice';
+import { generalListReceiver, indexReceiver, requestListReceiver } from '../../redux/reduxSlice/listsSlice';
 import Checkbox from '@material-ui/core/Checkbox';
 import LoadingBox from '../public/loadingBox';
 import MessageBox from '../public/messageBox';
@@ -75,7 +75,11 @@ export default function ProductList(props) {
 
     // filter Function
     const filterHandler = (e) => {
-        setFilteredList([...(productList[e])]);
+        if (e === 'generalList') {
+            setFilteredList([])
+        } else {
+            setFilteredList([...(productList[e])]);
+        }
         setRadioValue(e)
     };
 
@@ -125,6 +129,7 @@ export default function ProductList(props) {
     useEffect(() => {
         dispatch(generalListReceiver());
         dispatch(indexReceiver());
+        dispatch(requestListReceiver());
     }, [dispatch]);
 
 
@@ -161,7 +166,8 @@ export default function ProductList(props) {
                                     "generalList", 
                                     "topList",
                                     "latestList",
-                                    "hypeList"
+                                    "hypeList",
+                                    "requestList"
                                 ]
                             }
                             label={
@@ -169,7 +175,8 @@ export default function ProductList(props) {
                                     "GeneralList", 
                                     "TopList",
                                     "LatestList",
-                                    "HypeList"
+                                    "HypeList",
+                                    "RequestList"
                                 ]
                             }
                             callback={filterHandler}
@@ -201,7 +208,7 @@ export default function ProductList(props) {
                             >
                                 Delete
                             </Button> 
-                            <table class="clear-both table-fixed">
+                            <table className="clear-both table-fixed">
                                 <thead>
                                     <tr>
                                     <th>
@@ -213,11 +220,11 @@ export default function ProductList(props) {
                                             inputProps={{ 'aria-label': 'primary checkbox' }}
                                         />
                                     </th>
-                                    <th class="w-1/5">Thumb</th>
-                                    <th class="w-1/5">Id</th>
-                                    <th class="w-1/5">Owner</th>
-                                    <th class="w-1/5">Category</th>
-                                    <th class="w-1/5">Update</th>
+                                    <th className="w-1/5">Thumb</th>
+                                    <th className="w-1/5">Id</th>
+                                    <th className="w-1/5">Owner</th>
+                                    <th className="w-1/5">Category</th>
+                                    <th className="w-1/5">Update</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -234,11 +241,12 @@ export default function ProductList(props) {
                                                     value={JSON.stringify(state)}
                                                 />
                                             </td>
-                                            <td><img className="w-48 h-48 object-cover mx-auto" src={state.image[0]}></img></td>
+                                            <td><img className="w-48 h-48 object-cover mx-auto" alt="birdthumb" src={radioValue === 'requestList' ? '/images/defaulticon.jpg' : state.image[0]}></img></td>
                                             <td>{state._id}</td>
                                             <td>{state.owner}</td>
                                             <td>{state.category}</td>
                                             <td>{(state.updatedAt.split('.')[0]).replace('T', ' ')}</td>
+                                            { filteredList.length < 1 && 
                                             <td>
                                                 <Button
                                                     variant="contained"
@@ -265,6 +273,37 @@ export default function ProductList(props) {
                                                 Update
                                                 </Button>
                                             </td>
+                                            }
+                                            { radioValue === 'requestList' &&
+                                                <td>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    component={Link}
+                                                    to={{
+                                                        pathname:`/create`,
+                                                        value: {
+                                                            id: state._id,
+                                                            city: state.city,
+                                                            name: state.name,
+                                                            phone: state.phone,
+                                                            category: state.category,
+                                                            image: state.image,
+                                                            gender: state.gender,
+                                                            age: state.age,
+                                                            description: state.description,
+                                                            seller: state.seller,
+                                                            options: state.options
+                                                        },
+
+                                                    }}
+                                                    className={classes.updateButton}
+                                                    startIcon={<AutorenewIcon />}
+                                                >
+                                                Update
+                                                </Button>
+                                                </td>
+                                            }
                                         </tr>
 
                                         )

@@ -26,26 +26,26 @@ const useStyles = makeStyles({
 });
 
 export default function CreateProduct(props) {
+    const value = props.location.value === undefined ? "" : props.location.value;
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [city, setCity] = useState('');
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState('');
-    const [phone, setPhone] = useState('');
-    const [gender, setGender] = useState('');
-    const [age, setAge] = useState('');
-    const [description, setDescription] = useState('');
-    const [seller, setSeller] = useState('');
-    const [options, setOptions] = useState({
+    const [city, setCity] = useState(value.city || '');
+    const [name, setName] = useState(value.name || '');
+    const [category, setCategory] = useState(value.category || '');
+    const [phone, setPhone] = useState(value.phone || '');
+    const [gender, setGender] = useState(value.gender || '');
+    const [age, setAge] = useState(value.age || '');
+    const [description, setDescription] = useState(value.description || '');
+    const [seller, setSeller] = useState(value.seller || '');
+    const [options, setOptions] = useState( value.options || { 
         "hypeList":false,
         "topList":false,
         "latestList":true
     });
     const [ country ] = useState('Turkey');
+    console.log(value);
 
     const [pictures, setPictures] = useState([]);
-
-
     // image upload handler
     const onDrop = e => {
         e.preventDefault();
@@ -85,54 +85,67 @@ export default function CreateProduct(props) {
                 if ((pictures.map((state) => state.size > 350000 ? false : true)).includes(false)) {
                     SwalError('Max image size exceed')
                 } else {
-                    const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
-                    const bodyFormData = new FormData();
-                    pictures.map((state) => bodyFormData.append('image', state));
-                    await Axios.post('/api/uploads/create', bodyFormData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                            Authorization: `Bearer ${userInfo.token}`,
-                            Path: randompath 
-                        },
-                    }).then((state) => state.statusText === 'OK' ?
-                    SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, () => {
-                        dispatch(
-                            createProduct({
-                                name,
-                                city,
-                                owner: userInfo.name,
-                                phone,
-                                category,
-                                gender,
-                                image: randompath,
-                                age,
-                                description,
-                                seller,
-                                options
-                            })
+
+                        const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
+                        const bodyFormData = new FormData();
+                        pictures.map((state) => bodyFormData.append('image', state));
+                        await Axios.post('/api/uploads/create', bodyFormData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                                Authorization: `Bearer ${userInfo.token}`,
+                                Path: randompath 
+                            },
+                        }).then((state) => state.statusText === 'OK' ?
+                        SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, () => {
+                            dispatch(
+                                createProduct({           
+                                    name,
+                                    path: value === "" ? 'create' : 'admincreate',
+                                    city,
+                                    owner: userInfo.name,
+                                    phone,
+                                    category,
+                                    gender,
+                                    image: value === "" ? randompath : state.data.paths,
+                                    age,
+                                    description,
+                                    seller,
+                                    options
+                                })
+                            )
+                        })  :
+                        console.log('image upload fail')
                         )
-                    })  :
-                    console.log('image upload fail')
-                    )
+
+
                 }
             }
         }
     }
 
-    // Max picture 6
+    // if not have value image max 6
     useEffect(() => {
-        if (pictures.length > 6) setPictures(pictures.slice(0,6))
-    }, [pictures])
+        if (pictures.length > 6 && value === "") {setPictures(pictures.slice(0,6))}
+    }, [pictures, value])
 
     return (
         <div className="md:flex max-w-screen-2xl md:justify-center ml-2">
             <div className="mt-20 md:w-2/5 flex-shrink-0">
                 <h2 className="text-center text-gray-700 mb-10 text-4xl font-extrabold">Advert Details</h2>
                 
- 
             <form className="form" onSubmit={submitHandler}>
                 {loading && <LoadingBox></LoadingBox>}
                 {error &&  <MessageBox variant="error">{error}</MessageBox>}
+                {value !== "" &&
+                    <InputLabel
+                    type='text'
+                    disable={true}
+                    tag='imagefile'
+                    name='Imagefile'
+                    value={value.image}
+                    />
+                }
+
                 <InputLabel 
                     type='text'
                     disable={true}
@@ -155,9 +168,7 @@ export default function CreateProduct(props) {
                     />
                 <div className="mt-5">
                     <select name='variety' id='variety' onChange={(e) => setCategory(e.target.value)}>
-                        <option value='none' selected disabled hidden>
-                            Select an Option
-                        </option>
+                        <option value='none'>Select an Option</option>
                         <option value="Africangrey">African Grey</option>
                         <option value="Amazon">Amazon</option>
                         <option value="Alexandrine">Alexandrine</option>
@@ -229,15 +240,19 @@ export default function CreateProduct(props) {
                     value={name}
                     callback={setName}
                     />
-                <InputLabel 
-                    type='tel'
-                    tag='phone'
-                    name='Phone'
-                    pattern={"[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}"}
-                    placeholder={"123 456 78 91"}
-                    value={phone}
-                    callback={setPhone}
-                    />
+                <div className="mt-10">
+                    <label className="text-gray-600 font-semibold" htmlFor='phone'>Phone</label>
+                    <input
+                        className="mt-2 block w-full p-2 h-16 border border-transparent rounded-md"
+                        type='tel'
+                        id='phone'
+                        placeholder="0123 456 78 90"
+                        pattern={"[0-9]{4} [0-9]{3} [0-9]{2} [0-9]{2}"}
+                        defaultValue={phone}
+                        required
+                        onChange={(e) => setPhone(e.target.value)}
+                    ></input>
+                </div>
                 <div className="mt-10">
                     <label className="text-gray-600 font-semibold" htmlFor='description'>Description</label>
                     <textarea
@@ -317,8 +332,8 @@ export default function CreateProduct(props) {
                 <div>
                 <ul id="style-1" className="mt-10">
                     <label className="mb-10 text-gray-600 font-semibold block">Options</label>
-                    <Checkbox name={"Boost in Hype just $5"} value={'hypeList'} fnc={optionHandler}/>
-                    <Checkbox name={"Boost in TopList just $10"} value={'topList'} fnc={optionHandler} />
+                    <Checkbox name={"Boost in Hype just $5"} checked={options['hypeList']} value={'hypeList'} fnc={optionHandler}/>
+                    <Checkbox name={"Boost in TopList just $10"} checked={options['topList']} value={'topList'} fnc={optionHandler} />
                 </ul>
                     <div className="mt-10">
                         <CreateButton name={'Create'} />

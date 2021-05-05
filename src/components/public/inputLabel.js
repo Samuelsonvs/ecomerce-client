@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function InputLabel({type, value='', disable=false, placeholder=false, pattern=false, tag, name, callback}) {
+export default function InputLabel({type, value='', disable=false, placeholder="", tag, name, callback}) {
     return (
         <div className="mt-10">
             <label className="text-gray-600 font-semibold" htmlFor={tag}>{name}</label>
@@ -10,7 +10,6 @@ export default function InputLabel({type, value='', disable=false, placeholder=f
                 disabled={disable}
                 id={tag}
                 placeholder={placeholder}
-                pattern={pattern}
                 defaultValue={value}
                 required
                 onChange={(e) => callback(e.target.value)}

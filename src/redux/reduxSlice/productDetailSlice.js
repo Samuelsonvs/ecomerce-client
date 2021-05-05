@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { apiCallBegan, withLoginApiCallBegan } from '../api/api';
+import { publicApi, withLoginApi } from '../api/apiActions';
 
 const slice = createSlice({
     name: 'productDetail',
@@ -9,11 +9,10 @@ const slice = createSlice({
         error: null
     },
     reducers: {
-        productDetailRequested: (state, action) => {
+        productRequest: (state, action) => {
             state.loading = true;
         },
-        
-        productDetailReceived: (state, action) => {
+        productDetailSuccess: (state, action) => {
             state.loading = false;
             state.product = action.payload;
         },
@@ -23,9 +22,9 @@ const slice = createSlice({
         },
         productCreate: (state, action) => {
             state.loading = false;
-            state.product = action.payload
+            state.product = action.payload.product
         },
-        prodcutDetailFail: (state, action) => {
+        prodcutFail: (state, action) => {
             state.loading = false;
             state.error = action.payload
         }
@@ -34,40 +33,40 @@ const slice = createSlice({
 
 
 export const {
-    productDetailRequested,
-    productDetailReceived,
+    productRequest,
+    productDetailSuccess,
     productUpdate,
     productCreate,
-    prodcutDetailFail
+    prodcutFail
 } = slice.actions;
 export default slice.reducer;
 
 const url = '/api/product';
 
-export const detailProduct = (productId) => apiCallBegan({
+export const detailProduct = (productId) => publicApi({
     url: url + '/' + productId,
     method: 'get',
-    onStart: productDetailRequested.type,
-    onSuccess: productDetailReceived.type,
-    onError: prodcutDetailFail.type
+    onStart: productRequest.type,
+    onSuccess: productDetailSuccess.type,
+    onError: prodcutFail.type
 });
 
 
-export const updateProduct = (product) => withLoginApiCallBegan({
+export const updateProduct = (product) => withLoginApi({
     url: url + '/' + product._id,
     method: 'put',
     data: product,
-    onStart: productDetailRequested.type,
+    onStart: productRequest.type,
     onSuccess: productUpdate.type,
-    onFail: prodcutDetailFail.type
+    onFail: prodcutFail.type
 })
 
 
-export const createProduct = (product) => withLoginApiCallBegan({
-    url: url + '/create',
+export const createProduct = (product) => withLoginApi({
+    url: url + "/" + product.path,
     method: 'post',
     data: product,
-    onStart: productDetailRequested.type,
+    onStart: productRequest.type,
     onSuccess: productCreate.type,
-    onFail: prodcutDetailFail.type
+    onFail: prodcutFail.type
 })

@@ -71,7 +71,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'İlan isimleri' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Ilan isimleri' },
   { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
   { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
   { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
@@ -90,12 +90,13 @@ function EnhancedTableHead(props) {
         <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
+            style={{transform: "scale(1.3)"}}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+            inputProps={{ 'aria-label': 'select all users' }}
+          />All
         </TableCell>
-        {headCells.map((headCell) => (
+        {/* {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
@@ -115,21 +116,21 @@ function EnhancedTableHead(props) {
               ) : null}
             </TableSortLabel>
           </TableCell>
-        ))}
+        ))} */}
       </TableRow>
     </TableHead>
   );
 }
 
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
+// EnhancedTableHead.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   numSelected: PropTypes.number.isRequired,
+//   onRequestSort: PropTypes.func.isRequired,
+//   onSelectAllClick: PropTypes.func.isRequired,
+//   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+// };
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -147,6 +148,7 @@ const useToolbarStyles = makeStyles((theme) => ({
           backgroundColor: theme.palette.secondary.dark,
         },
   title: {
+    fontSize: '1.3rem',
     flex: '1 1 100%',
   },
 }));
@@ -172,16 +174,10 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {numSelected > 0  && (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">
-            <AiFillDelete />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <AiFillControl />
+            <AiFillDelete style={{transform: "scale(1.6)"}}/>
           </IconButton>
         </Tooltip>
       )}
@@ -318,16 +314,17 @@ export default function CustomerList() {
                       <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
+                          style={{transform: "scale(1.3)"}}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
+                      <TableCell style={{fontSize: '1.3rem'}} component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell style={{fontSize: '1.3rem'}} align="right">{row.calories}</TableCell>
+                      <TableCell style={{fontSize: '1.3rem'}} align="right">{row.fat}</TableCell>
+                      <TableCell style={{fontSize: '1.3rem'}} align="right">{row.carbs}</TableCell>
+                      <TableCell style={{fontSize: '1.3rem'}} align="right">{row.protein}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -350,7 +347,7 @@ export default function CustomerList() {
         />
       </Paper>
       <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        control={<Switch checked={dense} style={{fontSize: '1.4rem'}} onChange={handleChangeDense} />}
         label="Dense padding"
       />
     </div>

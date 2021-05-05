@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
-import { apiCallBegan } from '../api/api';
+import { publicApi, withLoginApi } from '../api/apiActions';
 
 
 const slice = createSlice({
@@ -10,30 +10,35 @@ const slice = createSlice({
         topList: [],
         hypeList: [],
         generalList: [],
+        requestList: [],
         loading: false,
         lastFetch: null,
         error: null,
     },
     reducers: {
-        ListRequest: (state, action) => {
+        listRequest: (state, action) => {
             state.loading = true
         },
-        indexReceived: (state, action) => {
+        indexSuccess: (state, action) => {
             state.loading = false;
             state.latestList = action.payload.prodLatest;
             state.topList = action.payload.prodTopList;
             state.lastFetch = Date.now();
         },
-        hypeListReceived: (state, action) => {
+        hypeListSuccess: (state, action) => {
             state.loading = false;
             state.hypeList = action.payload.hypeList;
         },
-        generalListReceived: (state, action) => {
+        generalListSuccess: (state, action) => {
             state.loading = false;
             state.generalList = action.payload.generalList;
             state.hypeList = action.payload.hypeList
         },
-        ListFail: (state, action) => {
+        requestListSuccess: (state, action) => {
+            state.loading = false;
+            state.requestList = action.payload.requestList;
+        },
+        listFail: (state, action) => {
             state.loading = false;
             state.error = action.payload
         }
@@ -42,11 +47,12 @@ const slice = createSlice({
 
 
 export const {
-    ListRequest,
-    indexReceived,
-    hypeListReceived,
-    generalListReceived,
-    ListFail
+    listRequest,
+    indexSuccess,
+    hypeListSuccess,
+    generalListSuccess,
+    requestListSuccess,
+    listFail
 } = slice.actions;
 export default slice.reducer;
 
@@ -58,25 +64,32 @@ export const indexReceiver = () => (dispatch, getState) => {
     const diffInMinutes = moment().diff(moment(lastFetch), 'minutes')
     if ( diffInMinutes < 10 ) return;
 
-    dispatch(apiCallBegan({
+    dispatch(publicApi({
         url,
-        onStart: ListRequest.type,
-        onSuccess: indexReceived.type,
-        onError: ListFail.type,
+        onStart: listRequest.type,
+        onSuccess: indexSuccess.type,
+        onError: listFail.type,
     }));
 };
 
 
-export const hypeListReceiver = () => apiCallBegan({
+export const hypeListReceiver = () => publicApi({
     url,
-    onStart: ListRequest.type,
-    onSuccess: hypeListReceived.type,
-    onError: ListFail.type
+    onStart: listRequest.type,
+    onSuccess: hypeListSuccess.type,
+    onError: listFail.type
 });
 
-export const generalListReceiver = () => apiCallBegan({
+export const generalListReceiver = () => publicApi({
     url: url + '/allproduct',
-    onStart: ListRequest.type,
-    onSuccess: generalListReceived.type,
-    onFail: ListFail.type
+    onStart: listRequest.type,
+    onSuccess: generalListSuccess.type,
+    onFail: listFail.type
 });
+
+export const requestListReceiver = () => withLoginApi({
+    url: url + '/requestlist',
+    onStart: listRequest.type,
+    onSuccess: requestListSuccess.type,
+    onFail: listFail.type
+})

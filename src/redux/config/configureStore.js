@@ -1,24 +1,30 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import api from "../api/generalApiAction";
-import apiWithLogin from '../api/apiWithLogin';
+import apiPublic from "../api/publicApiActions";
+import apiWithLogin from '../api/apiWithUserLogin';
 import reducer from '../combineReducer';
+import apiAdminActions from "../api/apiAdmin";
 
-const preloadedState = {
-    entities: {
-        signinOrRegister: {
-            userInfo: localStorage.getItem('userInfo')
-            ? JSON.parse(localStorage.getItem('userInfo'))
-            : null,
-        },
-    },
-};
+
+
+// const preloadedState = {
+//     entities: {
+//         signinOrRegister: {
+//             userInfo: JSON.parse(localStorage.getItem('userInfo'))
+//             ? 
+//             JSON.parse(localStorage.getItem('userInfo'))
+//             :
+//             null
+//         },
+//     },
+// };
 
 export default function configStore(){
     return configureStore({
         reducer,
-        preloadedState,
+        //preloadedState,
         middleware: [
-            ...getDefaultMiddleware(),api,apiWithLogin
+            ...getDefaultMiddleware(),apiPublic,apiWithLogin,apiAdminActions
         ]
     })
 };
+

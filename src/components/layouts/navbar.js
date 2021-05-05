@@ -15,6 +15,9 @@ export default function Navbar() {
     const userSignin = useSelector((state) => state.entities.signinOrRegister);
     const { userInfo } = userSignin;
 
+    const adminSignin = useSelector((state) => state.entities.adminPanel);
+    const { adminInfo } = adminSignin;
+
     const handleUserDropdown = () => {
         setUserDropdown(!userDropdown)
     };
@@ -82,8 +85,7 @@ export default function Navbar() {
     };
 
     return (
-        <>
-                                    
+        <>                          
             <div className="md:mr-10 absolute right-24 md:right-0 md:relative text-2xl">
                 { userInfo ? (
                     <div class="ml-3 relative inline-block">
@@ -107,7 +109,7 @@ export default function Navbar() {
                         Login
                     </Link>
                 )}
-                {userInfo && userInfo.isAdmin && (
+                {adminInfo && (
                     <div class="ml-7 relative inline-block">
                         <div>
                             <button type="button" onClick={handleAdminDropdown} class="bg-gray-800 flex text-base rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false" aria-haspopup="true">
@@ -118,7 +120,7 @@ export default function Navbar() {
                         <div onClick={handleAdminDropdown} ref={adminContainer} class={"origin-top-right z-50 absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transition ease-out duration-200 "+(adminDropdown ? "transform opacity-100 scale-100" : "transform opacity-0 scale-0")} role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                             <Link to="/dashboard/productlist" class="block px-4 py-2 border-gray-300 border-b text-lg text-gray-900 hover:bg-gray-100" role="menuitem">Products</Link>
                             <Link to="/dashboard/orderlist" class="block px-4 py-2 border-gray-300 border-b text-lg text-gray-900 hover:bg-gray-100" role="menuitem">Orders</Link>
-                            <Link to="/dashboard/customerlist" class="block px-4 py-2 border-gray-300 border-b text-lg text-gray-900 hover:bg-gray-100" role="menuitem">Customers</Link>
+                            <Link to="/dashboard/customerlist" class="block px-4 py-2 text-lg text-gray-900 hover:bg-gray-100" role="menuitem">Customers</Link>
                         </div>
                     </div>
             )}

@@ -5,9 +5,36 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import configStore from './redux/config/configureStore';
 import { Provider } from 'react-redux';
-// import persistStore from 'redux-persist';
+import { verifyUser } from './redux/reduxSlice/userSigninOrRegisterSlice';
+import { AdminAxios, UserAxios } from './utils/interceptors';
+import { verifyAdmin } from './redux/reduxSlice/adminSlice';
 
 const store = configStore();
+
+store.dispatch(verifyUser());
+
+store.dispatch(verifyAdmin());
+
+UserAxios.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem(
+      "userInfo"
+    )}`;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+AdminAxios.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem(
+      "adminInfo"
+    )}`;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 
 ReactDOM.render(
   <Provider store={store}>

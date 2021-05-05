@@ -1,10 +1,9 @@
 import InputLabel from '../public/inputLabel';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import LoadingBox from '../public/loadingBox';
 import MessageBox from '../public/messageBox';
-import { SwalWarning, SwalUpdateWarning } from '../../helpers/sweetalert2';
+import { SwalUpdateWarning } from '../../helpers/sweetalert2';
 import { updateProduct } from '../../redux/reduxSlice/productDetailSlice';
 import CreateButton from '../public/createButton';
 

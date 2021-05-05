@@ -69,9 +69,9 @@ export default function DetailPart({ product }) {
                     <ul>
                         <li className="py-5 flex border-b flex-col items-center">
                             <div>
-                                <Link class="bg-gray-800 flex text-base rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false" aria-haspopup="true">
-                                    <span class="sr-only">Open user menu</span>
-                                    <img class="h-20 w-20 rounded-full" src={"/images/profil.png"} alt=""/>
+                                <Link className="bg-gray-800 flex text-base rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-expanded="false" aria-haspopup="true">
+                                    <span className="sr-only">Open user menu</span>
+                                    <img className="h-20 w-20 rounded-full" src={"/images/profil.png"} alt=""/>
                                 </Link>
                             </div>
                             <span className="mt-4">{product.city}</span>

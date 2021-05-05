@@ -38,9 +38,7 @@ export default function ProductsScreen(props) {
             setRegionList([])
         }
     };
-
-    console.log(region === '', 'region');
-    console.log(radioValue === '','radiovalue');
+    
     // Checkbox Handler
     const categoryCheckboxHandler = (e) => {
         e.stopPropagation();
@@ -104,7 +102,7 @@ export default function ProductsScreen(props) {
     useEffect(() => {
         if (categoryList.length > 0 && region !== '' && radioValue !== 'All') {
             setChaoticList([
-                ...(categoryList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList.length > 1 ? regionList[0].city : null))))
+                ...(categoryList.filter((state) => (state.age === (ageList[0].age)) && (state.city === (regionList.length > 1 ? regionList[0].city : 'Iceland'))))
             ])
         } else if (categoryList.length > 0 && ageList.length > 0) {
             setChaoticList([
@@ -147,7 +145,7 @@ export default function ProductsScreen(props) {
             <div className="md:flex md:p-10">
                 <aside className="w-full bg-white p-5 md:w-96">
                     <div className="mt-10 ml-3 text-indigo-700">
-                        <h3 className="mb-5 border-b pb-5 font-semibold text-3xl">Kategoriler</h3>
+                        <h3 className="mb-5 border-b pb-5 font-semibold text-3xl">Categories</h3>
                         <ul id="style-1" className="mt-10">
                             <Checkbox value={"Budgie"} fnc={categoryCheckboxHandler}/>
                             <Checkbox value={"Canary"} fnc={categoryCheckboxHandler}/>
@@ -162,7 +160,7 @@ export default function ProductsScreen(props) {
                             <Checkbox value={"Monk"} fnc={categoryCheckboxHandler}/>
                             <Checkbox value={"Roseringed"} name={"Rose-ringed"} fnc={categoryCheckboxHandler}/>
                             <li>
-                                <label class="checkbox">
+                                <label className="checkbox">
                                     <input type="checkbox" />
                                     <span>Diğer...</span>
                                 </label>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { apiCallBegan } from '../api/api';
+import { publicApi, verifyApi, withLoginApi } from '../api/apiActions';
 
 const slice = createSlice({
     name: 'userSigninorRegister',
@@ -37,7 +37,10 @@ const slice = createSlice({
             state.loading = false;
             state.userInfo = action.payload
         },
-
+        userVerify: (state, action) => {
+            state.loading = false;
+            state.userInfo = action.payload
+        },
         userRegisterFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
@@ -56,6 +59,7 @@ export const {
     userSignOut,
     userRegisterRequest,
     userRegisterSuccess,
+    userVerify,
     userRegisterFail,
     errorClear
 } = slice.actions;
@@ -63,7 +67,7 @@ export default slice.reducer;
 
 const url = "/api/users/";
 
-export const signUser = (email, password) => apiCallBegan({
+export const signUser = (email, password) => publicApi({
     url: url + "login",
     method: "post",
     data: {email, password},
@@ -81,7 +85,7 @@ export const clearError = () => (dispatch, getState) => {
     dispatch({ type: errorClear.type })
 };
 
-export const registerUser = (name, email, password) => apiCallBegan({
+export const registerUser = (name, email, password) => publicApi({
     url: url + "register",
     method: "post",
     data: {
@@ -93,3 +97,9 @@ export const registerUser = (name, email, password) => apiCallBegan({
     onRegister: userRegisterSuccess.type,
     onError: userRegisterFail.type
 });
+
+
+export const verifyUser = () => withLoginApi({
+    url: url + "verify",
+    onVerifyUser: userVerify.type
+})
