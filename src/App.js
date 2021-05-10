@@ -16,7 +16,6 @@ const RegisterScreen = React.lazy(() => import('./pages/RegisterScreen'));
 const ContactScreen = React.lazy(() => import('./pages/ContactScreen'));
 const ProductList = React.lazy(() => import('./components/private/ProductList'));
 const Dashboard = React.lazy(() => import('./components/private/Dashboard'));
-const OrderList = React.lazy(() => import('./components/private/OrderList'));
 const CustomerList = React.lazy(() => import('./components/private/CustomerList'));
 const ProductEdit = React.lazy(() => import('./components/private/ProductEdit'));
 const UpdateProduct = React.lazy(() => import('./components/private/UpdateProduct'));
@@ -46,7 +45,6 @@ export default function App() {
             <Route exact path="/dashboard" component={props => <Dashboard {...props} />}></Route>
             <UserRoute path="/create" component={props => <CreateProduct {...props} />}></UserRoute>
             <AdminRoute path="/dashboard/productlist" component={props => <ProductList {...props} />}></AdminRoute>
-            <AdminRoute path="/dashboard/orderlist" component={props => <OrderList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/customerlist" component={props => <CustomerList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/update/:id" component={props => <UpdateProduct {...props} />}></AdminRoute>
             <AdminRoute path="/product/edit/:id" component={props => <ProductEdit {...props} />}></AdminRoute> 

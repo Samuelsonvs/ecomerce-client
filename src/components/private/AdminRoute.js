@@ -12,7 +12,7 @@ export default function AdminRoute({ component: Component, ...rest}) {
                 adminInfo ? (
                     <Component {...props}></Component>
                 ) : (
-                    <Redirect to="/signin" />
+                    <Redirect to="/"/>
                 )
                 }
         ></Route>

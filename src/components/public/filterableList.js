@@ -4,14 +4,14 @@ import ListItemInfoCard from './listItemInfoCard';
 
 
 
-export default function FilterableList({generalList, itemPerPage, pageNumber}) {
+export default function FilterableList({HypeAllProductList, itemPerPage, pageNumber}) {
     return (
         <section className="w-full bg-white md:ml-10">
             <div className="bg-white md:p-5">
                 <h3 className="text-center text-5xl font-bold text-indigo-700 border-b border-white border-solid pb-10">Filterable List</h3>
                 <div className="flex justify-center">
                     <ul className="max-w-screen-xl md:flex-wrap md:flex md:justify-center md:ml-5">
-                        {generalList.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)
+                        {HypeAllProductList.slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)
                             .map((state, index) => {
                             return (
                                 <ListItemInfoCard 

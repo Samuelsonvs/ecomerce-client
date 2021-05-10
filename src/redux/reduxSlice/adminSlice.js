@@ -6,7 +6,8 @@ const slice = createSlice({
     initialState: {
         adminInfo: null,
         loading: false,
-        error: null
+        users: null,
+        error: null,
     },
 
     reducers: {
@@ -17,9 +18,13 @@ const slice = createSlice({
             state.loading = false;
             state.adminInfo = action.payload
         },
-        adminSigninFail: (state, action) => {
+        adminFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
+        },
+        adminGetUser : (state, action) => {
+            state.loading = false;
+            state.users = action.payload.users;
         },
         adminSignOut: (state, action) => {
             state.adminInfo = null;
@@ -34,7 +39,8 @@ const slice = createSlice({
 export const {
    adminRequest,
    adminSigninSuccess,
-   adminSigninFail,
+   adminFail,
+   adminGetUser,
    adminSignOut,
    adminVerify
 } = slice.actions;
@@ -48,10 +54,10 @@ export const signAdmin = (email, password) => publicApi({
     data: {email, password},
     onStart: adminRequest.type,
     onAdmin: adminSigninSuccess.type,
-    onError: adminSigninFail.type
+    onError: adminFail.type
 });
 
-export const outUser = () => (dispatch, getState) => {
+export const adminExit = () => (dispatch, getState) => {
     localStorage.removeItem('adminInfo');
     dispatch({ type: adminSignOut.type });
 };
@@ -59,4 +65,17 @@ export const outUser = () => (dispatch, getState) => {
 export const verifyAdmin = () => adminApi({
     url: url + 'verify',
     onVerifyAdmin: adminVerify.type
+});
+
+export const changeUserStatus = (userID) => adminApi({
+    url: url + userID,
+    onSuccess: adminGetUser.type,
+});
+
+
+export const getUsers = () => adminApi({
+    url: url + 'getusers',
+    onStart: adminRequest.type,
+    onSuccess: adminGetUser.type,
+    onError: adminFail.type
 })

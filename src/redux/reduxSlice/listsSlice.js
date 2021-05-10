@@ -9,10 +9,11 @@ const slice = createSlice({
         latestList: [],
         topList: [],
         hypeList: [],
-        generalList: [],
+        HypeAllProductList: [],
         requestList: [],
         loading: false,
         lastFetch: null,
+        advertslastFetch: null,
         error: null,
     },
     reducers: {
@@ -29,9 +30,9 @@ const slice = createSlice({
             state.loading = false;
             state.hypeList = action.payload.hypeList;
         },
-        generalListSuccess: (state, action) => {
+        HypeAllProductListSuccess: (state, action) => {
             state.loading = false;
-            state.generalList = action.payload.generalList;
+            state.HypeAllProductList = action.payload.HypeAllProductList;
             state.hypeList = action.payload.hypeList
         },
         requestListSuccess: (state, action) => {
@@ -50,7 +51,7 @@ export const {
     listRequest,
     indexSuccess,
     hypeListSuccess,
-    generalListSuccess,
+    HypeAllProductListSuccess,
     requestListSuccess,
     listFail
 } = slice.actions;
@@ -73,6 +74,7 @@ export const indexReceiver = () => (dispatch, getState) => {
 };
 
 
+
 export const hypeListReceiver = () => publicApi({
     url,
     onStart: listRequest.type,
@@ -80,10 +82,10 @@ export const hypeListReceiver = () => publicApi({
     onError: listFail.type
 });
 
-export const generalListReceiver = () => publicApi({
+export const HypeAllProductListReceiver = () => publicApi({
     url: url + '/allproduct',
     onStart: listRequest.type,
-    onSuccess: generalListSuccess.type,
+    onSuccess: HypeAllProductListSuccess.type,
     onFail: listFail.type
 });
 

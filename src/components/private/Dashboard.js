@@ -39,7 +39,7 @@ export default function SigninScreen(props) {
                 </h5>
             <form className="form" onSubmit={submitHandler}>
                 {loading && <LoadingBox></LoadingBox>}
-                {error &&  <MessageBox variant="error">{error}</MessageBox>}
+                {error &&  <MessageBox variant="error">{'ERROR'}</MessageBox>}
                 <InputLabel 
                     type='email'
                     tag='email'

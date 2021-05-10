@@ -6,7 +6,7 @@ import LoadingBox from '../components/public/loadingBox';
 import MessageBox from '../components/public/messageBox';
 import { RegionDropdown } from 'react-country-region-selector';
 import PaginationUI from '../components/public/paginationUI';
-import { generalListReceiver } from '../redux/reduxSlice/listsSlice';
+import { HypeAllProductListReceiver } from '../redux/reduxSlice/listsSlice';
 import Checkbox from '../components/public/checkbox';
 import RadioGroupSchema from '../components/public/radioGroupSchema';
 
@@ -28,7 +28,7 @@ export default function ProductsScreen(props) {
     const USER_PATH = "/adverts";
     const products = useSelector((state) => state.entities.lists);
 
-    const {loading, error, generalList, hypeList} = products;
+    const {loading, error, HypeAllProductList, hypeList} = products;
 
 
     // Region Handler
@@ -45,7 +45,7 @@ export default function ProductsScreen(props) {
         if (e.target.checked === true) {
             setCategoryList([
                 ...categoryList,
-                ...(generalList.filter((state) => 
+                ...(HypeAllProductList.filter((state) => 
                     state.category === e.target.value))]);
         } else {
             setCategoryList([
@@ -61,7 +61,7 @@ export default function ProductsScreen(props) {
             setAgeList([]);
         } else {     
             setAgeList([
-                ...(generalList.filter((state) => 
+                ...(HypeAllProductList.filter((state) => 
                 state.age === (e)))]);
         }
         setRadioValue(e);
@@ -75,7 +75,7 @@ export default function ProductsScreen(props) {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(generalListReceiver());
+        dispatch(HypeAllProductListReceiver());
     }, [dispatch]);
 
     // If one list active at least 
@@ -83,17 +83,17 @@ export default function ProductsScreen(props) {
         if (chaoticList.length !== 0 || region !== '' || radioValue !== 'All') {
             setNoOfPages(Math.ceil(chaoticList.length / itemPerPage))
         } else {
-            setNoOfPages(Math.ceil(generalList.length / itemPerPage));
+            setNoOfPages(Math.ceil(HypeAllProductList.length / itemPerPage));
         }
         setPageNumber(1);
-    }, [chaoticList, generalList]);
+    }, [chaoticList, HypeAllProductList]);
 
 
     //regionList side effect
     useEffect(() => {
         if (region !== '') {
             setRegionList([
-                ...(generalList.filter((state) => 
+                ...(HypeAllProductList.filter((state) => 
                 state.city === region))]);
         }
     }, [region]);
@@ -116,17 +116,9 @@ export default function ProductsScreen(props) {
             setChaoticList([
                 ...(ageList.filter((state) => state.city === (regionList.length > 0 ? regionList[0].city : 'Iceland')))
             ])
-        } else if (categoryList.length > 0) {
+        } else if (categoryList.length > 0 || ageList.length > 0 || regionList.length > 0 ) {
             setChaoticList([
-                ...categoryList
-            ])
-        } else if (ageList.length > 0) {
-            setChaoticList([
-                ...ageList
-            ])
-        } else if (regionList.length > 0) {
-            setChaoticList([
-                ...regionList
+                ...categoryList, ...ageList, ...regionList
             ])
         } else {
             setChaoticList([])
@@ -200,7 +192,7 @@ export default function ProductsScreen(props) {
                             />
                     </div>
                 </aside>
-                <FilterableList generalList={chaoticList.length !== 0 || region !== '' || radioValue !== 'All'  ? chaoticList : generalList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
+                <FilterableList HypeAllProductList={chaoticList.length !== 0 || region !== '' || radioValue !== 'All'  ? chaoticList : HypeAllProductList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
             </div>
            
             <div className="flex justify-center mt-20">
