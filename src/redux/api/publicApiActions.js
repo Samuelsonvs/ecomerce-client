@@ -22,10 +22,10 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
                         dispatch({ 
                             type: onSign, 
                             payload: {
+                                _id: response.data._id,
                                 email:response.data.email,
                                 name: response.data.name,
                                 token: (response.data.token).join(''),
-                                _id: response.data._id
                             }
 
                         })
@@ -33,10 +33,10 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
                         dispatch({ 
                             type: onRegister, 
                             payload: {
+                                _id: response.data._id,
                                 email:response.data.email,
                                 name: response.data.name,
                                 token: (response.data.token).join(''),
-                                _id: response.data._id
                             }
                         });
                 localStorage.setItem('userInfo', JSON.stringify((response.data.token.join(''))));

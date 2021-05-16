@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
     return (
         <div>
-            <div className="bg-gray-700">
+            <div className="bg-indigo-600">
             <div className="flex justify-between flex-wrap mt-16 p-12 w-full h-auto">
                 <div className="w-full sm:w-2/4">
                     <ul className="list-none flex justify-between text-white">
@@ -39,7 +39,7 @@ export default function Footer() {
                             <div className="manual-form-w bg-white h-20 flex items-center mt-5">
                                 <label className="ml-3 mr-2 font-extrabold text-3xl text-gray-500" htmlFor="footerEmail">Email</label>
                                 <input type="email" id="footerEmail" className="outline-none w-64"></input>
-                                <button className="outline-none bg-white"><FaArrowAltCircleRight className="w-16 h-16 text-gray-600" /></button>
+                                <button className="outline-none bg-white"><FaArrowAltCircleRight className="w-16 h-16 text-indigo-600" /></button>
                             </div>
                         </form>
                     </section>
@@ -59,7 +59,7 @@ export default function Footer() {
                     </section>
                 </div>
             </div>
-            <div className="p-1 bg-gray-800">
+            <div className="p-1 bg-blue-800">
                 <p className="text-white text-center text-2xl">2021 ProT Animal Supplies, Inc. All rights reserved.</p>
             </div>
             </div>

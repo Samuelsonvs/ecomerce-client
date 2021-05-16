@@ -37,7 +37,7 @@ export default function CustomerList() {
       error ?
       <MessageBox variant="error">{error}</MessageBox>
       :
-      (<table className="w-full">
+      (users && <table className="w-full">
         <thead>
           <tr>
             <th className="w-1/4 p-10">id</th>

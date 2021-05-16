@@ -17,7 +17,7 @@ export default function MessageBox({ variant, children }) {
     return (
         <div>
             <Alert className={classes.alert} severity={`${variant || 'warning'}`}>
-                <AlertTitle className={classes.alertitle}>Error</AlertTitle>
+                <AlertTitle className={classes.alertitle}>{variant}</AlertTitle>
                 {children} — <strong>check it out!</strong>
             </Alert>
         </div>

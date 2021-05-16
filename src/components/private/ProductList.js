@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { HypeAllProductListReceiver, indexReceiver, requestListReceiver } from '../../redux/reduxSlice/listsSlice';
+import { HypeAllProductListReceiver, requestListReceiver, topAndLatestListReceiver } from '../../redux/reduxSlice/listsSlice';
 import Checkbox from '@material-ui/core/Checkbox';
 import LoadingBox from '../public/loadingBox';
 import MessageBox from '../public/messageBox';
@@ -15,6 +15,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 import { Link } from 'react-router-dom';
 import { SwalWarning } from '../../helpers/sweetalert2';
 import RadioGroupSchema from '../public/radioGroupSchema';
+import { removeProducts } from '../../redux/reduxSlice/adminSlice';
 
 const id = '123456789';
 
@@ -41,7 +42,7 @@ export default function ProductList(props) {
     const [check, setCheck] = useState(false);
     const [filteredList, setFilteredList] = useState([]);
     const [noOfPages, setNoOfPages] = useState(1);
-    const [radioValue, setRadioValue] = useState('');
+    const [radioValue, setRadioValue] = useState('allProductList');
     const [itemPerPage, setItemPerPage] = useState(4);
     const [choosen, setChoosen] = useState({
         value: [],
@@ -62,8 +63,8 @@ export default function ProductList(props) {
     const handleChangeCheck = (e) => {
         if (!check) {
             setChoosen({
-                value:[...(radioValue ? productList[radioValue] : HypeAllProductList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage).map((state) => state._id)],
-                choosens:[...(radioValue ? productList[radioValue] : HypeAllProductList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)]
+                value:[...(radioValue ? productList[radioValue] : allProductList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage).map((state) => state._id)],
+                choosens:[...(radioValue ? productList[radioValue] : allProductList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)]
             })
         } else {
             setChoosen({
@@ -75,7 +76,7 @@ export default function ProductList(props) {
 
     // filter Function
     const filterHandler = (e) => {
-        if (e === 'HypeAllProductList') {
+        if (e === 'allProductList') {
             setFilteredList([])
         } else {
             setFilteredList([...(productList[e])]);
@@ -105,11 +106,11 @@ export default function ProductList(props) {
 
     const createHandler = () => {
         SwalWarning('Warning!', 'Are you sure you want to create new product?', () => props.history.push(`/product/edit/${id}`))
-    }
-
-    const deleteHandler = () => {
-        SwalWarning('Warning!', 'Are you sure you want to delete choosens product?', () => console.log(choosen.choosens, radioValue))
-    }
+    };
+    
+    const deleteWarning = () => {
+        SwalWarning('Warning!', 'Are you sure want to delete selected products ?', () => deleteHandler(choosen.value, radioValue))
+    };
 
     // change product number in one page
     const pageChange = (event) => {
@@ -118,30 +119,32 @@ export default function ProductList(props) {
 
   
     const productList = useSelector((state) => state.entities.lists);
-    const { loading, error, HypeAllProductList } = productList;
-
-    
+    const { loading, error, allProductList } = productList;
 
 
 
     const dispatch = useDispatch();
 
+    const deleteHandler = async (choosensID,listName) => {
+        dispatch(removeProducts(choosensID,listName));
+        props.history.push('/');
+    };
+
     useEffect(() => {
         dispatch(HypeAllProductListReceiver());
-        dispatch(indexReceiver());
-        dispatch(requestListReceiver());
+        dispatch(topAndLatestListReceiver());
+        dispatch(requestListReceiver())
     }, [dispatch]);
-
 
 
     useEffect(() => {
         if (filteredList.length !== 0) {
             setNoOfPages(Math.ceil(filteredList.length / itemPerPage))
         } else {
-            setNoOfPages(Math.ceil(HypeAllProductList.length / itemPerPage));
+            setNoOfPages(Math.ceil(allProductList.length / itemPerPage));
         }
         setPageNumber(1);
-    }, [filteredList, HypeAllProductList, itemPerPage]);
+    }, [filteredList, allProductList, itemPerPage]);
 
     // intermediate checkbox controller by other checkbox
     useEffect(() => {
@@ -163,16 +166,16 @@ export default function ProductList(props) {
                             value={radioValue}
                             values={
                                 [
-                                    "HypeAllProductList", 
+                                    "allProductList", 
                                     "topList",
                                     "latestList",
                                     "hypeList",
-                                    "requestList"
+                                    "requestList",
                                 ]
                             }
                             label={
                                 [
-                                    "HypeAllProductList", 
+                                    "allProductList", 
                                     "TopList",
                                     "LatestList",
                                     "HypeList",
@@ -201,7 +204,7 @@ export default function ProductList(props) {
                             <Button
                                 variant="contained"
                                 color="secondary"
-                                onClick={deleteHandler}
+                                onClick={deleteWarning}
                                 disabled= {check ? false : true}
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
@@ -228,7 +231,7 @@ export default function ProductList(props) {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    {(filteredList.length > 0 ? filteredList : HypeAllProductList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)
+                                    {(filteredList.length > 0 ? filteredList : allProductList).slice((pageNumber-1) * itemPerPage, pageNumber* itemPerPage)
                                     .map((state, key) => {
                                         return (
                                         <tr key={state._id}>
@@ -259,6 +262,7 @@ export default function ProductList(props) {
                                                             city: state.city,
                                                             name: state.name,
                                                             phone: state.phone,
+                                                            owner: state.owner,
                                                             category: state.category,
                                                             gender: state.gender,
                                                             age: state.age,
@@ -286,6 +290,7 @@ export default function ProductList(props) {
                                                             id: state._id,
                                                             city: state.city,
                                                             name: state.name,
+                                                            owner: state.owner,
                                                             phone: state.phone,
                                                             category: state.category,
                                                             image: state.image,

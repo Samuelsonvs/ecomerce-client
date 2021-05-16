@@ -13,7 +13,7 @@ import Checkbox from '../public/checkbox';
 import Axios from 'axios';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { createProduct } from '../../redux/reduxSlice/productDetailSlice';
+import { createProduct, requestProduct } from '../../redux/reduxSlice/productDetailSlice';
 import RadioGroupSchema from '../public/radioGroupSchema';
 
 const useStyles = makeStyles({
@@ -24,6 +24,8 @@ const useStyles = makeStyles({
         fontSize: '1.3rem'
     },
 });
+
+
 
 export default function CreateProduct(props) {
     const value = props.location.value === undefined ? "" : props.location.value;
@@ -43,7 +45,9 @@ export default function CreateProduct(props) {
         "latestList":true
     });
     const [ country ] = useState('Turkey');
-    console.log(value);
+
+
+    
 
     const [pictures, setPictures] = useState([]);
     // image upload handler
@@ -68,6 +72,10 @@ export default function CreateProduct(props) {
     const userSignin = useSelector((state) => state.entities.signinOrRegister);
     const { userInfo, loading, error } = userSignin;
 
+    const adminSignin = useSelector((state) => state.entities.adminPanel);
+    const { adminInfo } = adminSignin;
+
+
     const submitHandler = async (e) => {
         e.preventDefault();
         if (
@@ -85,39 +93,37 @@ export default function CreateProduct(props) {
                 if ((pictures.map((state) => state.size > 350000 ? false : true)).includes(false)) {
                     SwalError('Max image size exceed')
                 } else {
-
-                        const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
-                        const bodyFormData = new FormData();
-                        pictures.map((state) => bodyFormData.append('image', state));
-                        await Axios.post('/api/uploads/create', bodyFormData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                                Authorization: `Bearer ${userInfo.token}`,
-                                Path: randompath 
-                            },
-                        }).then((state) => state.statusText === 'OK' ?
-                        SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, () => {
-                            dispatch(
-                                createProduct({           
-                                    name,
-                                    path: value === "" ? 'create' : 'admincreate',
-                                    city,
-                                    owner: userInfo.name,
-                                    phone,
-                                    category,
-                                    gender,
-                                    image: value === "" ? randompath : state.data.paths,
-                                    age,
-                                    description,
-                                    seller,
-                                    options
-                                })
-                            )
-                        })  :
-                        console.log('image upload fail')
-                        )
-
-
+                        SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, async () => {
+                            const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
+                            const bodyFormData = new FormData();
+                            pictures.map((state) => bodyFormData.append('image', state));
+                            await Axios.post((adminInfo ? '/api/uploads/create': '/api/uploads/request'), bodyFormData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                    Authorization: `Bearer ${JSON.stringify(adminInfo ? adminInfo.token : userInfo.token)}`,
+                                    Path: randompath 
+                                },
+                            }).then((state) => state.statusText === 'OK' ?
+                                     dispatch(
+                                        (adminInfo ? createProduct : requestProduct)({         
+                                            name,
+                                            path: value === "" ? 'create' : 'admincreate',
+                                            city,
+                                            owner: value.owner || userInfo.name,
+                                            phone,
+                                            category,
+                                            gender,
+                                            image: value === "" ? randompath : state.data.paths,
+                                            age,
+                                            description,
+                                            seller,
+                                            options
+                                        })
+                                        )
+                                        :
+                                        SwalError('Image upload fail')
+                                    )
+                        })
                 }
             }
         }
@@ -126,7 +132,7 @@ export default function CreateProduct(props) {
     // if not have value image max 6
     useEffect(() => {
         if (pictures.length > 6 && value === "") {setPictures(pictures.slice(0,6))}
-    }, [pictures, value])
+    }, [pictures,value])
 
     return (
         <div className="md:flex max-w-screen-2xl md:justify-center ml-2">
@@ -146,7 +152,7 @@ export default function CreateProduct(props) {
                     />
                 }
 
-                <InputLabel 
+                <InputLabel
                     type='text'
                     disable={true}
                     tag='city'
@@ -184,7 +190,7 @@ export default function CreateProduct(props) {
                         <option value="other">other...</option>
                     </select>
                 </div>
-                <InputLabel 
+                <InputLabel
                     type='text'
                     disable={true}
                     tag='gender'
@@ -211,7 +217,7 @@ export default function CreateProduct(props) {
                     }
                     callback={setGender}
                     />   
-                <InputLabel 
+                <InputLabel
                     type='text'
                     disable={true}
                     tag='age'
@@ -232,11 +238,11 @@ export default function CreateProduct(props) {
                     }
                     callback={setAge}
                     />
-                
-                <InputLabel 
+
+                <InputLabel
                     type='text'
                     tag='name'
-                    name='Name'
+                    name='Ads Name'
                     value={name}
                     callback={setName}
                     />
@@ -277,7 +283,7 @@ export default function CreateProduct(props) {
                         type="file"
                     />
                     <label htmlFor="contained-button-file">
-                    <Button 
+                    <Button
                         disabled={pictures.length >= 15 ? true : false}
                         className={classes.button}
                         variant="contained" 
@@ -310,7 +316,7 @@ export default function CreateProduct(props) {
                         </div>
                     }
                 </div>
-                <InputLabel 
+                <InputLabel
                     type='text'
                     disable={true}
                     tag='seller'

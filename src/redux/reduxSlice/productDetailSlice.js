@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { publicApi, withLoginApi } from '../api/apiActions';
+import { adminApi, publicApi, withLoginApi } from '../api/apiActions';
 
 const slice = createSlice({
     name: 'productDetail',
@@ -52,8 +52,8 @@ export const detailProduct = (productId) => publicApi({
 });
 
 
-export const updateProduct = (product) => withLoginApi({
-    url: url + '/' + product._id,
+export const updateProduct = (product) => adminApi({
+    url: url + '/update/' + product._id,
     method: 'put',
     data: product,
     onStart: productRequest.type,
@@ -62,7 +62,17 @@ export const updateProduct = (product) => withLoginApi({
 })
 
 
-export const createProduct = (product) => withLoginApi({
+export const createProduct = (product) => adminApi({
+    url: url + "/" + product.path,
+    method: 'post',
+    data: product,
+    onStart: productRequest.type,
+    onSuccess: productCreate.type,
+    onFail: prodcutFail.type
+})
+
+
+export const requestProduct = (product) => withLoginApi({
     url: url + "/" + product.path,
     method: 'post',
     data: product,

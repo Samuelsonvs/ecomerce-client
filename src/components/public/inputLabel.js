@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export default function InputLabel({type, value='', disable=false, placeholder="", tag, name, callback}) {
+    
     return (
         <div className="mt-10">
             <label className="text-gray-600 font-semibold" htmlFor={tag}>{name}</label>

@@ -42,7 +42,7 @@ export default function ProductEdit(props) {
       await Axios.post('/api/uploads/123456789', bodyFormData, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${userInfo.userInfo.token}`, 
+            Authorization: `Bearer ${JSON.stringify(userInfo.token)}`, 
         },
       })
   };

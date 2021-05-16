@@ -77,40 +77,40 @@ export default function DetailPart({ product }) {
                             <span className="mt-4">{product.city}</span>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">İlan sahibi</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Owner</span>
                             <Link className="text-blue-800 underline">
                                 <span>{product.owner}</span>
                             </Link>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">Tel</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Phone</span>
                             <span className="text-gray-700">{product.phone}</span>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">İlan tarihi</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Ads Date</span>
                             <span className="text-gray-700">{(product.updatedAt.split('T')[0])}</span>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">Cins</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Species</span>
                             <span className="text-gray-700">{product.category}</span>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">Cinsiyet</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Gender</span>
                             <span className="text-gray-700">{product.gender}</span>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">Yaş</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Age</span>
                             <span className="text-gray-700">{product.age}</span>
                         </li>
                         <li className="py-5 flex border-b">
-                            <span className="font-semibold w-1/2 sm:w-48">Kimden</span>
+                            <span className="font-semibold w-1/2 sm:w-48">Seller</span>
                             <span className="text-gray-700">{product.seller}</span>
                         </li>
                     </ul>
                 </div>       
             </div>
             <div className="mt-10">
-                <h3 className="border-b py-5 font-bold text-3xl">Açıklama</h3>
+                <h3 className="border-b py-5 font-bold text-3xl">Explanation</h3>
                 <div className="mt-4 max-w-6xl">
                     <p>
                         {product.description} 

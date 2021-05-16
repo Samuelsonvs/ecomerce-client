@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import {FiHome, FiColumns, FiMapPin, FiSmile } from "react-icons/fi";
+import {FiHome, FiBookOpen, FiMapPin, FiAlertOctagon } from "react-icons/fi";
 import '../../css/burger.css';
 
 export default function NavbarMobileToggler() {
@@ -51,31 +51,31 @@ export default function NavbarMobileToggler() {
             </div>
             
             {/* mobile */}
-            <nav id="mobile-nav" onClick={menuFunc} ref={container} className={'top-0 right-0 h-screen absolute z-30 bg-gray-700 text-white font-semibold sm:text-3xl md:hidden  transition duration-500 ease-in-out '
+            <nav id="mobile-nav" onClick={menuFunc} ref={container} className={'top-0 right-0 h-screen fixed z-30 bg-indigo-600 text-white font-semibold sm:text-3xl md:hidden  transition duration-500 ease-in-out '
              + (menu === false ? 'transform translate-x-full scale-0 opacity-0' : 'transform translate-x-0 w-1/2')}> 
                 <ul>
                 <li className="mt-80 mb-3 text-center ">
-                    <Link className="block w-full py-4 hover:bg-gray-400" to="/">
+                    <Link className="block w-full py-4 hover:bg-blue-400" to="/">
                     <FiHome className="inline mr-2" />
                     HomePage
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full py-4 hover:bg-gray-400" to="/adverts">
-                    <FiColumns className="inline mr-2" />
+                    <Link className="block w-full py-4 hover:bg-blue-400" to="/adverts">
+                    <FiAlertOctagon className="inline mr-2" />
+                    Adverts
+                    </Link>
+                </li>
+                <li className="mt-5 mb-3 text-center">
+                    <Link className="block w-full py-4 hover:bg-blue-400" to="/">
+                    <FiBookOpen className="inline mr-2" />
                     Species
                     </Link>
                 </li>
                 <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full py-4 hover:bg-gray-400" to='/contact' >
+                    <Link className="block w-full py-4 hover:bg-blue-400" to='/contact' >
                     <FiMapPin className="inline mr-2" />
                     Contact
-                    </Link>
-                </li>
-                <li className="mt-5 mb-3 text-center">
-                    <Link className="block w-full py-4 hover:bg-gray-400" >
-                    <FiSmile className="inline mr-2" />
-                    About Us
                     </Link>
                 </li>
                 </ul>

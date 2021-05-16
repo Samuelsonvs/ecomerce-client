@@ -21,7 +21,7 @@ export default function ProductDetailScreen(props) {
             {loading  ? (
                 <LoadingBox />
             ) : error ? (
-                <MessageBox variant={"error"} >Hata Mesajı</MessageBox>
+                <MessageBox variant={"error"} >{error}</MessageBox>
             ) : (
                 <div>
                     <DetailPart product={product} />

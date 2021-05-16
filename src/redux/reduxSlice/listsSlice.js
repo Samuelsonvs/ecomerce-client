@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
-import { publicApi, withLoginApi } from '../api/apiActions';
+import { adminApi, publicApi } from '../api/apiActions';
 
 
 const slice = createSlice({
@@ -9,7 +9,7 @@ const slice = createSlice({
         latestList: [],
         topList: [],
         hypeList: [],
-        HypeAllProductList: [],
+        allProductList: [],
         requestList: [],
         loading: false,
         lastFetch: null,
@@ -32,7 +32,7 @@ const slice = createSlice({
         },
         HypeAllProductListSuccess: (state, action) => {
             state.loading = false;
-            state.HypeAllProductList = action.payload.HypeAllProductList;
+            state.allProductList = action.payload.allProductList;
             state.hypeList = action.payload.hypeList
         },
         requestListSuccess: (state, action) => {
@@ -73,8 +73,6 @@ export const indexReceiver = () => (dispatch, getState) => {
     }));
 };
 
-
-
 export const hypeListReceiver = () => publicApi({
     url,
     onStart: listRequest.type,
@@ -89,8 +87,15 @@ export const HypeAllProductListReceiver = () => publicApi({
     onFail: listFail.type
 });
 
-export const requestListReceiver = () => withLoginApi({
-    url: url + '/requestlist',
+export const topAndLatestListReceiver = () => publicApi({
+    url,
+    onStart: listRequest.type,
+    onSuccess: indexSuccess.type,
+    onError: listFail.type,
+});
+
+export const requestListReceiver = () => adminApi({
+    url: '/api/admin/requestlist',
     onStart: listRequest.type,
     onSuccess: requestListSuccess.type,
     onFail: listFail.type

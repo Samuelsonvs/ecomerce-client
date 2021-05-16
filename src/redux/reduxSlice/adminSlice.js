@@ -29,6 +29,9 @@ const slice = createSlice({
         adminSignOut: (state, action) => {
             state.adminInfo = null;
         },
+        adminRemoveHandler: (state, action) => {
+            state.loading = false;
+        },
         adminVerify: (state, action) => {
             state.loading = false;
             state.adminInfo = action.payload
@@ -41,6 +44,7 @@ export const {
    adminSigninSuccess,
    adminFail,
    adminGetUser,
+   adminRemoveHandler,
    adminSignOut,
    adminVerify
 } = slice.actions;
@@ -77,5 +81,14 @@ export const getUsers = () => adminApi({
     url: url + 'getusers',
     onStart: adminRequest.type,
     onSuccess: adminGetUser.type,
+    onError: adminFail.type
+})
+
+export const removeProducts = (choosensID, listName) => adminApi({
+    url: url + 'remove',
+    method:'delete',
+    data: {choosensID, listName},
+    onStart: adminRequest.type,
+    onSucces: adminRemoveHandler.type,
     onError: adminFail.type
 })

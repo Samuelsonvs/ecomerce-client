@@ -28,7 +28,7 @@ export default function ProductsScreen(props) {
     const USER_PATH = "/adverts";
     const products = useSelector((state) => state.entities.lists);
 
-    const {loading, error, HypeAllProductList, hypeList} = products;
+    const {loading, error, allProductList, hypeList} = products;
 
 
     // Region Handler
@@ -45,7 +45,7 @@ export default function ProductsScreen(props) {
         if (e.target.checked === true) {
             setCategoryList([
                 ...categoryList,
-                ...(HypeAllProductList.filter((state) => 
+                ...(allProductList.filter((state) => 
                     state.category === e.target.value))]);
         } else {
             setCategoryList([
@@ -61,7 +61,7 @@ export default function ProductsScreen(props) {
             setAgeList([]);
         } else {     
             setAgeList([
-                ...(HypeAllProductList.filter((state) => 
+                ...(allProductList.filter((state) => 
                 state.age === (e)))]);
         }
         setRadioValue(e);
@@ -83,17 +83,17 @@ export default function ProductsScreen(props) {
         if (chaoticList.length !== 0 || region !== '' || radioValue !== 'All') {
             setNoOfPages(Math.ceil(chaoticList.length / itemPerPage))
         } else {
-            setNoOfPages(Math.ceil(HypeAllProductList.length / itemPerPage));
+            setNoOfPages(Math.ceil(allProductList.length / itemPerPage));
         }
         setPageNumber(1);
-    }, [chaoticList, HypeAllProductList]);
+    }, [chaoticList, allProductList]);
 
 
     //regionList side effect
     useEffect(() => {
         if (region !== '') {
             setRegionList([
-                ...(HypeAllProductList.filter((state) => 
+                ...(allProductList.filter((state) => 
                 state.city === region))]);
         }
     }, [region]);
@@ -192,7 +192,7 @@ export default function ProductsScreen(props) {
                             />
                     </div>
                 </aside>
-                <FilterableList HypeAllProductList={chaoticList.length !== 0 || region !== '' || radioValue !== 'All'  ? chaoticList : HypeAllProductList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
+                <FilterableList productList={chaoticList.length !== 0 || region !== '' || radioValue !== 'All'  ? chaoticList : allProductList} pageNumber={pageNumber} itemPerPage={itemPerPage} />           
             </div>
            
             <div className="flex justify-center mt-20">
