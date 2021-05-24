@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/api/product"
+  to = "https://ptielapp.herokuapp.com/api/product"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
