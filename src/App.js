@@ -58,7 +58,7 @@ export default function App() {
             <AdminRoute path="/dashboard/customerlist" component={props => <CustomerList {...props} />}></AdminRoute>
             <AdminRoute path="/dashboard/update/:id" component={props => <UpdateProduct {...props} />}></AdminRoute>
             <AdminRoute path="/product/edit/:id" component={props => <ProductEdit {...props} />}></AdminRoute> 
-            <Route path="/404" component={props => <NotFoundScreen {...props} />}></Route>
+            <Route component={props => <NotFoundScreen {...props} />}></Route>
           </Switch>
         </main>
         <footer className="bg-indigo-50">
