@@ -1,0 +1,67 @@
+[[redirects]]
+  from = "/api/product"
+  to = "https://ptielapp.herokuapp.com/api/product"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/product/allproduct"
+  to = "https://ptielapp.herokuapp.com/api/product/allproduct"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/product/*"
+  to = "https://ptielapp.herokuapp.com/api/product/*"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/product/update/*"
+  to = "https://ptielapp.herokuapp.com/api/product/update/*"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/admin/requestlist"
+  to = "https://ptielapp.herokuapp.com/api/admin/requestlist"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/users/login"
+  to = "https://ptielapp.herokuapp.com/api/users/login"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/users/register"
+  to = "https://ptielapp.herokuapp.com/api/users/register"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/users/verify"
+  to = "https://ptielapp.herokuapp.com/api/users/verify"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/api/users/registerconfirm/*"
+  to = "https://ptielapp.herokuapp.com/api/users/registerconfirm/*"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/*"
+  to = "/404page"
+  status = 404
