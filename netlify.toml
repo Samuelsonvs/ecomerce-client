@@ -60,3 +60,10 @@
   status = 200
   force = true
   signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/*"
+  to = "https://ptielapp.netlify.app/404"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
