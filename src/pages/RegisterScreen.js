@@ -19,7 +19,7 @@ export default function RegisterScreen(props) {
      : '/';
 
     const userRegister = useSelector((state) => state.entities.signinOrRegister);
-    const { userInfo, loading, error } = userRegister;
+    const { userInfo, register, loading, error } = userRegister;
 
     const dispatch = useDispatch();
     const submitHandler = (e) => {
@@ -73,7 +73,7 @@ export default function RegisterScreen(props) {
                 </h5>
             <form className="form" onSubmit={submitHandler}>
                 {loading && <LoadingBox></LoadingBox>}
-                {error &&  <MessageBox variant="error">{error}</MessageBox>}
+                {(error || register) &&  <MessageBox variant={error ? 'error' : 'success'}>{error || register.message}</MessageBox>}
                 <InputLabel 
                     type='text'
                     tag='name'

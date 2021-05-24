@@ -5,9 +5,10 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
     if (action.type !== actions.publicApi.type) { return next(action)};
 
     
-    const { url, method, data, onStart, onSuccess, onAdmin, onSign, onRegister, onError } = action.payload;
+    const { url, method, data, onStart, onSuccess, onAdmin, onSign, onError } = action.payload;
     if(onStart) dispatch({ type: onStart });  
 
+    
     if (url) {
         next(action); 
         try{
@@ -17,28 +18,16 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
                 data,
             });
 
-            if (onSign || onRegister) {
-                onSign  ? 
-                        dispatch({ 
-                            type: onSign, 
-                            payload: {
-                                _id: response.data._id,
-                                email:response.data.email,
-                                name: response.data.name,
-                                token: (response.data.token).join(''),
-                            }
-
-                        })
-                        : 
-                        dispatch({ 
-                            type: onRegister, 
-                            payload: {
-                                _id: response.data._id,
-                                email:response.data.email,
-                                name: response.data.name,
-                                token: (response.data.token).join(''),
-                            }
-                        });
+            if (onSign) {
+                dispatch({ 
+                    type: onSign, 
+                    payload: {
+                        _id: response.data._id,
+                        email:response.data.email,
+                        name: response.data.name,
+                        token: (response.data.token).join(''),
+                    }
+                })
                 localStorage.setItem('userInfo', JSON.stringify((response.data.token.join(''))));
             };
 
@@ -47,8 +36,9 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
                 localStorage.setItem('adminInfo', JSON.stringify((response.data.token.join(''))))
             }
 
-            
             if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
+
+            if (onError) {dispatch({ type: onError, payload: ''})}
 
         } catch(error) {
             if(error.response.status === 401){

@@ -14,6 +14,7 @@ import SigninScreen from './pages/SigninScreen';
 import RegisterScreen from './pages/RegisterScreen';
 import ContactScreen from './pages/ContactScreen';
 import NotFoundScreen from './pages/NotFoundScreen';
+import AccountVerifiedScreen from './pages/AccountVerifiedScreen';
 
 
 // const HomePage = lazy(() => import('./pages/HomePage'));
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/signin" component={props => <SigninScreen {...props} />}></Route>
             <Route path="/register" component={props => <RegisterScreen {...props} />}></Route>
             <Route path="/contact" component={props => <ContactScreen {...props} />}></Route>
+            <Route path="/activate/user/:id" component={props => <AccountVerifiedScreen {...props} />}></Route>
             <Route exact path="/dashboard" component={props => <Dashboard {...props} />}></Route>
             <UserRoute path="/create" component={props => <CreateProduct {...props} />}></UserRoute>
             <AdminRoute path="/dashboard/productlist" component={props => <ProductList {...props} />}></AdminRoute>

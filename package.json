@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "http://localhost:5000",
+  "proxy": "https://ptielapp.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "set \"GENERATE_SOURCEMAP=false\" && craco start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && craco build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && set \"INLINE_RUNTIME_CHUNK=false\" && craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

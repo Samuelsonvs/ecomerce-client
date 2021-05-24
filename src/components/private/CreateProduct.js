@@ -94,14 +94,14 @@ export default function CreateProduct(props) {
                     SwalError('Max image size exceed')
                 } else {
                         SwalUpdateWarning('Warning!', 'Are you sure you want to update?', props, async () => {
-                            const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
+                            //"for local upload" const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
                             const bodyFormData = new FormData();
                             pictures.map((state) => bodyFormData.append('image', state));
                             await Axios.post((adminInfo ? '/api/uploads/create': '/api/uploads/request'), bodyFormData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data',
                                     Authorization: `Bearer ${JSON.stringify(adminInfo ? adminInfo.token : userInfo.token)}`,
-                                    Path: randompath 
+                                    //"for local upload" Path: randompath 
                                 },
                             }).then((state) => state.statusText === 'OK' ?
                                      dispatch(
@@ -113,7 +113,7 @@ export default function CreateProduct(props) {
                                             phone,
                                             category,
                                             gender,
-                                            image: value === "" ? randompath : state.data.paths,
+                                            image: state.data.paths,       //"for local upload" image: value === "" ? randompath : state.data.paths,
                                             age,
                                             description,
                                             seller,
@@ -297,7 +297,7 @@ export default function CreateProduct(props) {
                 <div>
                     {
                         pictures.length > 0 && 
-                        <div className="mt-20 ml-5">
+                        <div className="mt-20 ml-5">                     
                             {pictures.map((state, index) => {
                                 return (
                                 <img key={index} className="inline mr-5 mb-5 max-w-md max-h-72" src={URL.createObjectURL(state)} alt='preview'></img>

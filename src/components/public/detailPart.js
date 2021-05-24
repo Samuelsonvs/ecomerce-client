@@ -36,33 +36,33 @@ export default function DetailPart({ product }) {
             <div className="md:flex md:justify-evenly">
                 <div className="mt-10 flex justify-center items-center md:items-start flex-col">
                     <div>
-                    <div className="mt-5">
-                        {/* <button onClick={() => setLightbox(true)}>asasas</button> */}
-                        <button className="focus:outline-none cursor-zoom-in" onClick={() => setLightbox(true)}>
-                        {lightbox &&
-                                    
-                            <Lightbox 
-                                mainSrc={bigImage}
-                                nextSrc={nextImage}
-                                prevSrc={prevImage}
-                                onCloseRequest={() => {setLightbox(false); setBigImages(zoomImages[midImages.indexOf(currentImage)])}}
-                                onMoveNextRequest={() => setBigImages(nextImage)}
-                                onMovePrevRequest = {() => setBigImages(prevImage)}
-                            />
-                        } 
-                            <img className="inline" src={currentImage}/>
-                        
-                        </button>
-                    </div>
-                    <div className="mt-5">
-                        {thumbImages.map((state, index) => {
-                            return (
-                                <button key={index} className="focus:outline-none cursor-pointer" onClick={currentImageHandler}>
-                                    <img className="w-full h-full inline" alt="midi" src={state}/>
-                                </button>
-                            )
-                        })}
-                    </div>
+                        <div className="mt-5">
+                            {/* <button onClick={() => setLightbox(true)}>asasas</button> */}
+                            <button className="focus:outline-none cursor-zoom-in" onClick={() => setLightbox(true)}>
+                            {lightbox &&
+                                        
+                                <Lightbox 
+                                    mainSrc={bigImage}
+                                    nextSrc={nextImage}
+                                    prevSrc={prevImage}
+                                    onCloseRequest={() => {setLightbox(false); setBigImages(zoomImages[midImages.indexOf(currentImage)])}}
+                                    onMoveNextRequest={() => setBigImages(nextImage)}
+                                    onMovePrevRequest = {() => setBigImages(prevImage)}
+                                />
+                            } 
+                                <img className="inline" alt="midImage" src={currentImage}/>
+                            
+                            </button>
+                        </div>
+                        <div className="mt-5">
+                            {thumbImages.map((state, index) => {
+                                return (
+                                    <button key={index} className="focus:outline-none cursor-pointer" onClick={currentImageHandler}>
+                                        <img className="w-full h-full inline" alt="midi" src={state}/>
+                                    </button>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
                 <div className="ml-10 mt-10">

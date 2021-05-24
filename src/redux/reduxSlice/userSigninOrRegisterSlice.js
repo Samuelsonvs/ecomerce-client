@@ -6,6 +6,7 @@ const slice = createSlice({
     initialState: {
         userInfo: null,
         loading: false,
+        register: null,
         lastFetch: null,
         error: null
     },
@@ -14,28 +15,23 @@ const slice = createSlice({
         userSigninRequest: (state, action) => {
             state.loading = true
         },
-
         userSigninSuccess: (state, action) => {
             state.loading = false;
             state.userInfo = action.payload
         },
-
         userSigninFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         },
-
         userSignOut: (state, action) => {
             state.userInfo = null;
         },
-
         userRegisterRequest: (state, action) => {
             state.loading = true
         },
-
         userRegisterSuccess: (state, action) => {
             state.loading = false;
-            state.userInfo = action.payload
+            state.register = action.payload
         },
         userVerify: (state, action) => {
             state.loading = false;
@@ -45,7 +41,6 @@ const slice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-
         errorClear: (state, action) => {
             state.error = null
         }
@@ -94,12 +89,17 @@ export const registerUser = (name, email, password) => publicApi({
         password
     },
     onStart: userRegisterRequest.type,
-    onRegister: userRegisterSuccess.type,
+    onSuccess: userRegisterSuccess.type,
     onError: userRegisterFail.type
 });
-
 
 export const verifyUser = () => withLoginApi({
     url: url + "verify",
     onVerifyUser: userVerify.type
-})
+});
+
+export const confirmRegister = (id) => publicApi({
+    url: url + "registerconfirm/" + id,
+    onSuccess: userRegisterSuccess.type,
+    onError: userRegisterFail.type 
+});

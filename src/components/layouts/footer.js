@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { saveMail } from '../../redux/reduxSlice/mailSlice';
 
 export default function Footer() {
+    const [email, setEmail] = useState('');
+    const dispatch = useDispatch();
+
+    const submitHandler = () => {
+        dispatch(saveMail(email))
+    }
     return (
         <div>
             <div className="bg-indigo-600">
@@ -35,10 +43,10 @@ export default function Footer() {
                 <div className="mt-20 sm:mt-0">
                     <section>
                         <h2 className="text-white font-bold">Keep In Touch</h2>
-                        <form className="">
+                        <form className="form" onSubmit={submitHandler}>
                             <div className="manual-form-w bg-white h-20 flex items-center mt-5">
                                 <label className="ml-3 mr-2 font-extrabold text-3xl text-gray-500" htmlFor="footerEmail">Email</label>
-                                <input type="email" id="footerEmail" className="outline-none w-64"></input>
+                                <input type="email" id="footerEmail" onChange={(e) => setEmail(e.target.value)} className="outline-none w-64"></input>
                                 <button className="outline-none bg-white"><FaArrowAltCircleRight className="w-16 h-16 text-indigo-600" /></button>
                             </div>
                         </form>

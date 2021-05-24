@@ -30,7 +30,7 @@ const slice = createSlice({
             state.loading = false;
             state.hypeList = action.payload.hypeList;
         },
-        HypeAllProductListSuccess: (state, action) => {
+        hypeAllProductListSuccess: (state, action) => {
             state.loading = false;
             state.allProductList = action.payload.allProductList;
             state.hypeList = action.payload.hypeList
@@ -51,7 +51,7 @@ export const {
     listRequest,
     indexSuccess,
     hypeListSuccess,
-    HypeAllProductListSuccess,
+    hypeAllProductListSuccess,
     requestListSuccess,
     listFail
 } = slice.actions;
@@ -83,7 +83,7 @@ export const hypeListReceiver = () => publicApi({
 export const HypeAllProductListReceiver = () => publicApi({
     url: url + '/allproduct',
     onStart: listRequest.type,
-    onSuccess: HypeAllProductListSuccess.type,
+    onSuccess: hypeAllProductListSuccess.type,
     onFail: listFail.type
 });
 
