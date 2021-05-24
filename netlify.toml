@@ -13,8 +13,8 @@
   signed = "API_SIGNATURE_TOKEN"
 
 [[redirects]]
-  from = "/api/product/*"
-  to = "https://ptielapp.herokuapp.com/api/product/*"
+  from = "/api/product/:id"
+  to = "https://ptielapp.herokuapp.com/api/product/:id"
   status = 200
   force = true
   signed = "API_SIGNATURE_TOKEN"
@@ -63,5 +63,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/404page"
+  to = "/*"
   status = 404
