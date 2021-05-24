@@ -21,7 +21,7 @@
 
 [[redirects]]
   from = "/api/product/update/*"
-  to = "https://ptielapp.herokuapp.com/api/product/update/*"
+  to = "https://ptielapp.herokuapp.com/api/product/update/:splat"
   status = 200
   force = true
   signed = "API_SIGNATURE_TOKEN"
@@ -56,12 +56,12 @@
 
 [[redirects]]
   from = "/api/users/registerconfirm/*"
-  to = "https://ptielapp.herokuapp.com/api/users/registerconfirm/*"
+  to = "https://ptielapp.herokuapp.com/api/users/registerconfirm/:splat"
   status = 200
   force = true
   signed = "API_SIGNATURE_TOKEN"
 
 [[redirects]]
   from = "/*"
-  to = "/*"
+  to = "/404page"
   status = 404
