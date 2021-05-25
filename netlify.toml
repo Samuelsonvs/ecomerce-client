@@ -111,6 +111,13 @@
   signed = "API_SIGNATURE_TOKEN"
 
 [[redirects]]
+  from = "/dashboard"
+  to = "/dashboard"
+  status = 200
+  force = true
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
