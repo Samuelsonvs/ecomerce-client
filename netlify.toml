@@ -63,5 +63,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/404page"
+  to = "/:splat"
   status = 404
