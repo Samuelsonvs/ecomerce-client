@@ -60,7 +60,7 @@ export const {
 } = slice.actions;
 export default slice.reducer;
 
-const url = "/users/";
+const url = "/api/users/";
 
 export const signUser = (email, password) => publicApi({
     url: url + "login",

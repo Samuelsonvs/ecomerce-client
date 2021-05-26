@@ -57,7 +57,7 @@ export const {
 } = slice.actions;
 export default slice.reducer;
 
-const url = "/product";
+const url = "/api/product";
 
 export const indexReceiver = () => (dispatch, getState) => {
     const { lastFetch } = getState().entities.lists;
@@ -95,7 +95,7 @@ export const topAndLatestListReceiver = () => publicApi({
 });
 
 export const requestListReceiver = () => adminApi({
-    url: '/admin/requestlist',
+    url: '/api/admin/requestlist',
     onStart: listRequest.type,
     onSuccess: requestListSuccess.type,
     onFail: listFail.type

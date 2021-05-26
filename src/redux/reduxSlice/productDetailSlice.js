@@ -41,7 +41,7 @@ export const {
 } = slice.actions;
 export default slice.reducer;
 
-const url = '/product';
+const url = '/api/product';
 
 export const detailProduct = (productId) => publicApi({
     url: url + '/' + productId,

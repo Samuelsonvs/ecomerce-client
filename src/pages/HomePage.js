@@ -20,7 +20,6 @@ export default function HomePage() {
         topList,
         latestList,
     } = indexLists;
-
    
     useEffect(() => {
         dispatch(indexReceiver());
