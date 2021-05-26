@@ -97,7 +97,7 @@ export default function CreateProduct(props) {
                             //"for local upload" const randompath = Math.random().toString(36).substring(2) + Date.now().toString();
                             const bodyFormData = new FormData();
                             pictures.map((state) => bodyFormData.append('image', state));
-                            await Axios.post((adminInfo ? '/api/uploads/create': '/api/uploads/request'), bodyFormData, {
+                            await Axios.post((adminInfo ? '/uploads/create': '/uploads/request'), bodyFormData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data',
                                     Authorization: `Bearer ${JSON.stringify(adminInfo ? adminInfo.token : userInfo.token)}`,

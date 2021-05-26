@@ -39,7 +39,7 @@ export default function ProductEdit(props) {
     e.preventDefault();
       const bodyFormData = new FormData();
       pictures.map((state) => bodyFormData.append('image', state));
-      await Axios.post('/api/uploads/123456789', bodyFormData, {
+      await Axios.post('/uploads/123456789', bodyFormData, {
         headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${JSON.stringify(userInfo.token)}`, 
