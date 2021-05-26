@@ -17,7 +17,7 @@ const apiAdminActions = ({ dispatch, getState }) => next => async action => {
                 next(action);
                 try{
                     const response = await AdminAxios.request({
-                        baseURL,
+                        baseURL: baseURL,
                         url,
                         method,
                         data,

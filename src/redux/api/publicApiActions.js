@@ -15,7 +15,7 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
         next(action); 
         try{
             const response = await axios.request({
-                baseURL,
+                baseURL: baseURL,
                 url,
                 method,
                 data,

@@ -17,7 +17,7 @@ const apiLoginVerify = ({ dispatch, getState }) => next => async action => {
                 next(action);
                 try{
                     const response = await UserAxios.request({
-                        baseURL,
+                        baseURL: baseURL,
                         url,
                         method,
                         data,
