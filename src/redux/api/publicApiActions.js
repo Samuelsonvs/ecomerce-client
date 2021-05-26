@@ -13,7 +13,7 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
         next(action); 
         try{
             const response = await axios.request({
-                baseURL: process.env.APP_API_URL,
+                baseURL: process.env.REACT_APP_API_URL,
                 url,
                 method,
                 data,
