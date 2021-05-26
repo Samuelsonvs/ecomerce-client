@@ -1,6 +1,8 @@
 import { AdminAxios } from '../../utils/interceptors';
 import * as actions from './apiActions';
 
+const baseURL = process.env.REACT_APP_API_URL;
+
 const apiAdminActions = ({ dispatch, getState }) => next => async action => {
     if (action.type !== actions.adminApi.type) { return next(action)};
 
@@ -15,7 +17,7 @@ const apiAdminActions = ({ dispatch, getState }) => next => async action => {
                 next(action);
                 try{
                     const response = await AdminAxios.request({
-                        baseURL: process.env.REACT_APP_API_URL,
+                        baseURL,
                         url,
                         method,
                         data,

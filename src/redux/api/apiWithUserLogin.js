@@ -1,6 +1,8 @@
 import { UserAxios } from '../../utils/interceptors';
 import * as actions from './apiActions';
 
+const baseURL = process.env.REACT_APP_API_URL;
+
 const apiLoginVerify = ({ dispatch, getState }) => next => async action => {
     if (action.type !== actions.withLoginApi.type) { return next(action)};
 
@@ -15,7 +17,7 @@ const apiLoginVerify = ({ dispatch, getState }) => next => async action => {
                 next(action);
                 try{
                     const response = await UserAxios.request({
-                        baseURL: process.env.REACT_APP_API_URL,
+                        baseURL,
                         url,
                         method,
                         data,

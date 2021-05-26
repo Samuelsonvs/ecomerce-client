@@ -31,7 +31,7 @@ export const {
 } = slice.actions;
 export default slice.reducer;
 
-const url = '/api/mail/';
+const url = '/mail/';
 
 export const sendMail = (name, email, head, description) => withLoginApi({
     url: url + 'sendmail',
