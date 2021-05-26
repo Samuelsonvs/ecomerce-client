@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as actions from './apiActions';
 
+const baseurl = process.env.REACT_APP_API_URL;
+
 const apiPublic = ({ dispatch, getState }) => next => async action => {
     if (action.type !== actions.publicApi.type) { return next(action)};
 
@@ -13,7 +15,7 @@ const apiPublic = ({ dispatch, getState }) => next => async action => {
         next(action); 
         try{
             const response = await axios.request({
-                baseURL: process.env.REACT_APP_API_URL,
+                baseURL: baseurl,
                 url,
                 method,
                 data,
